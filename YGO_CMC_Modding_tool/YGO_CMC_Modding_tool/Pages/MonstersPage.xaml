@@ -1,0 +1,261 @@
+<Page x:Class="YGO_CMC_Modding_tool.Pages.MonstersPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:pages="clr-namespace:YGO_CMC_Modding_tool.Pages"
+      xmlns:vm="clr-namespace:YGO_CMC_Modding_tool.ViewModels"
+      mc:Ignorable="d"
+      Foreground="{DynamicResource Theme_TextBrush}" d:DesignWidth="1360" d:DesignHeight="768">
+
+    <Page.DataContext>
+        <vm:MonstersListViewModel/>
+    </Page.DataContext>
+
+    <Page.Resources>
+        <!-- Converter for dirty flag visibility -->
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <DataTemplate x:Key="MonsterDisplayTemplate">
+            <!-- Sidebar only shows the name. No revert button here. -->
+            <TextBlock Text="{Binding Display}" FontSize="20" VerticalAlignment="Center"/>
+        </DataTemplate>
+        <!-- Common item container style for all ComboBoxes -->
+        <Style x:Key="ComboItemStyle" TargetType="ComboBoxItem">
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="Height" Value="36"/>
+            <Setter Property="Margin" Value="4,2"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        <!-- Optional item template if items are plain strings -->
+        <DataTemplate x:Key="ComboItemTemplate">
+            <TextBlock Text="{Binding}" FontSize="24" VerticalAlignment="Center"/>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid Background="{DynamicResource Theme_BackgroundBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Left sidebar: list + patch button -->
+        <Grid Grid.Column="0" Margin="8">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Sidebar list now uses display names (indexes + dirty flag) -->
+            <ListBox Name="MonstersListBox" Grid.Row="0"
+                     ItemsSource="{Binding MonsterDisplayNames}"
+                     ItemTemplate="{StaticResource MonsterDisplayTemplate}"
+                     SelectionChanged="OnMonsterSelected"/>
+
+            <!-- Patch All button under the list -->
+            <Button Grid.Row="1"
+                    Content="Patch All Monsters"
+                    Margin="0,8,0,0"
+                    Padding="8,6"
+                    HorizontalAlignment="Stretch"
+                    Click="OnPatchAllMonstersClick"/>
+        </Grid>
+
+        <!-- Content area -->
+        <Grid Grid.Column="1" Margin="8">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.3*"/>
+                <ColumnDefinition Width="0.35*"/>
+                <ColumnDefinition Width="0.35*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Background card -->
+            <Rectangle Grid.RowSpan="2" Grid.ColumnSpan="3" RadiusX="3" RadiusY="3">
+                <Rectangle.Stroke>
+                    <SolidColorBrush Color="{DynamicResource Theme_BorderColor}" />
+                </Rectangle.Stroke>
+                <Rectangle.Fill>
+                    <SolidColorBrush Color="{DynamicResource Theme_ControlBackgroundColor}" />
+                </Rectangle.Fill>
+            </Rectangle>
+
+            <!-- Image -->
+            <Image x:Name="MonsterImg"
+                   Grid.Row="0"
+                   Grid.Column="0"
+                   Margin="16"
+                   Stretch="Uniform"
+                   Source="/YGO_CMC_Modding_tool;component/Resources/Monsters/Happy Lover.jpg"/>
+
+            <!-- Name header with revert button aligned to the right -->
+            <Grid Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="16" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="MonsterName"
+                           Grid.Column="0"
+                           Text="Happy Lover"
+                           FontSize="48" FontWeight="Bold"
+                           HorizontalAlignment="Stretch"
+                           VerticalAlignment="Top"/>
+                <Button x:Name="HeaderRevertButton"
+                        Grid.Column="1"
+                        Content="Revert"
+                        Margin="12,0,0,0"
+                        Padding="12,4"
+                        VerticalAlignment="Top"
+                        Click="OnRevertCurrent"
+                        Visibility="Collapsed"/>
+            </Grid>
+
+            <!-- Stats grid -->
+            <Grid Grid.Column="1" Grid.Row="0" Margin="16 100 16 16">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- AP -->
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="AP" FontSize="32" FontWeight="Bold" Foreground="#FF7DE06E" VerticalAlignment="Center"/>
+                <TextBox x:Name="MonsterAP" Grid.Row="0" Grid.Column="1" FontSize="28" Text="45" TextAlignment="Center" Padding="-8" Margin="8" TextChanged="OnMonsterFieldChanged"/>
+
+                <!-- +AP -->
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="+AP" FontSize="32" FontWeight="Bold" Foreground="#FF7DE06E" VerticalAlignment="Center"/>
+                <TextBox x:Name="MonsterpAP" Grid.Row="1" Grid.Column="1" FontSize="28" Text="60" TextAlignment="Center" Padding="-8" Margin="8" TextChanged="OnMonsterFieldChanged"/>
+
+                <!-- MP -->
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="MP" FontSize="32" FontWeight="Bold" Foreground="#FF6C7FE0" VerticalAlignment="Center"/>
+                <TextBox x:Name="MonsterMP" Grid.Row="2" Grid.Column="1" FontSize="28" Text="30" TextAlignment="Center" Padding="-8" Margin="8" TextChanged="OnMonsterFieldChanged"/>
+
+                <!-- EXP -->
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="EXP" FontSize="32" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFDDBE33"/>
+                <TextBox x:Name="MonsterEXP" Grid.Row="3" Grid.Column="1" FontSize="28" Text="22" TextAlignment="Center" Padding="-8" Margin="8" TextChanged="OnMonsterFieldChanged"/>
+
+                <!-- PP -->
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="PP" FontSize="32" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFDB8B8B"/>
+                <TextBox x:Name="MonsterPP" Grid.Row="4" Grid.Column="1" FontSize="28" Text="170" TextAlignment="Center" Padding="-8" Margin="8" TextChanged="OnMonsterFieldChanged"/>
+
+                <!-- ATK -->
+                <TextBlock Grid.Row="5" Grid.Column="0" Text="ATK" FontSize="32" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFDB8B8B"/>
+                <TextBox x:Name="MonsterATK" Grid.Row="5" Grid.Column="1" FontSize="28" Text="102" TextAlignment="Center" Padding="-8" Margin="8" TextChanged="OnMonsterFieldChanged"/>
+
+                <!-- DEF -->
+                <TextBlock Grid.Row="6" Grid.Column="0" Text="DEF" FontSize="32" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFDB8B8B"/>
+                <TextBox x:Name="MonsterDEF" Grid.Row="6" Grid.Column="1" FontSize="28" TextAlignment="Center" Padding="-8" Margin="8" TextChanged="OnMonsterFieldChanged"/>
+            </Grid>
+
+            <!-- Type grid -->
+            <Grid Grid.Column="2" Grid.Row="0" Margin="16 100 16 16">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Attribute -->
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Attribute" FontSize="28" FontWeight="Bold" VerticalAlignment="Center"/>
+                <ComboBox x:Name="MonsterAttribute" ItemsSource="{Binding AttributeKeys}" Grid.Row="0" Grid.Column="1" FontSize="28" Margin="8" ItemContainerStyle="{StaticResource ComboItemStyle}" ItemTemplate="{StaticResource ComboItemTemplate}" SelectionChanged="OnMonsterAttributeChanged"/>
+
+                <!-- Type -->
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Type" FontSize="32" FontWeight="Bold" VerticalAlignment="Center"/>
+                <ComboBox x:Name="MonsterType" ItemsSource="{Binding TypeKeys}" Grid.Row="1" Grid.Column="1" FontSize="28" Margin="8" ItemContainerStyle="{StaticResource ComboItemStyle}" ItemTemplate="{StaticResource ComboItemTemplate}" SelectionChanged="OnMonsterTypeChanged"/>
+
+                <!-- Capsule -->
+                <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Text="Capsule Rank - Coming Soon!" FontSize="28" FontWeight="Bold" VerticalAlignment="Center"/>
+
+
+                <!-- Movement -->
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="Movement" FontSize="24" FontWeight="Bold" VerticalAlignment="Center"/>
+                <ComboBox x:Name="MonsterMovement" ItemsSource="{Binding PatternKeys}" Grid.Row="3" Grid.Column="1" FontSize="28" Margin="8" ItemContainerStyle="{StaticResource ComboItemStyle}" ItemTemplate="{StaticResource ComboItemTemplate}" SelectionChanged="MonsterMovement_SelectionChanged"/>
+
+                <!-- Attack -->
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="Attack" FontSize="32" FontWeight="Bold" VerticalAlignment="Center"/>
+                <ComboBox x:Name="MonsterAttack" ItemsSource="{Binding PatternKeys}" Grid.Row="4" Grid.Column="1" FontSize="28" Margin="8" ItemContainerStyle="{StaticResource ComboItemStyle}" ItemTemplate="{StaticResource ComboItemTemplate}" SelectionChanged="MonsterAttack_SelectionChanged"/>
+
+                <!-- SPA -->
+                <TextBlock Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Text="SPA - Coming Soon!" FontSize="28" FontWeight="Bold" VerticalAlignment="Center"/>
+            </Grid>
+
+            <!-- Rates grid -->
+            <Grid Grid.Column="0" Grid.Row="1" Margin="16 16 16 16" VerticalAlignment="Top">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Effect Rates" FontSize="32" FontWeight="Bold" VerticalAlignment="Center" Margin="0 0 0 32"/>
+                    
+                <!--Symbol Effect Rate-->
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Symbol Effect Rate" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
+                <TextBox x:Name="MonsterSEA" Grid.Row="1" Grid.Column="1" FontSize="28" Text="100" TextAlignment="Center" Padding="-8" Margin="8" TextChanged="OnMonsterFieldChanged"/>
+                <!--Symbol Tile Rate-->
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Tile Effect Rate" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
+                <TextBox x:Name="MonsterTEA" Grid.Row="2" Grid.Column="1" FontSize="28" Text="100" TextAlignment="Center" Padding="-8" Margin="8" TextChanged="OnMonsterFieldChanged"/>
+                <!--Symbol Map Rate-->
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="Map Effect Rate" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
+                <TextBox x:Name="MonsterMEA" Grid.Row="3" Grid.Column="1" FontSize="28" Text="100" TextAlignment="Center" Padding="-8" Margin="8" TextChanged="OnMonsterFieldChanged"/>
+            </Grid>
+
+            <!-- Patterns grid -->
+            <Grid Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Margin="16 16 16 16">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <!--Movement-->
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Movement Pattern" FontSize="32" FontWeight="Bold" VerticalAlignment="Center" Margin="0 0 0 12"/>
+                <Image x:Name="MovementPattern"
+                   Grid.Row="1"
+                   Grid.Column="0"
+                   Margin="4"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Top"
+                   Stretch="Uniform"
+                   Source="/YGO_CMC_Modding_tool;component/Resources/Patterns/Pattern +3.jpg"/>
+
+
+                <!--Attack-->
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="Attack Pattern" FontSize="32" FontWeight="Bold" VerticalAlignment="Center" Margin="0 0 0 12"/>
+                <Image x:Name="AttackPattern"
+                 Grid.Row="1"
+                 Grid.Column="1"
+                 Margin="4"
+                 HorizontalAlignment="Stretch"
+                 VerticalAlignment="Top"
+                 Stretch="Uniform"
+                 Source="/YGO_CMC_Modding_tool;component/Resources/Patterns/Pattern +1.jpg"/>
+
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>

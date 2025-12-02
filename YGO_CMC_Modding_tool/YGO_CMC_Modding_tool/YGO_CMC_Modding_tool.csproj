@@ -1,0 +1,362 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	  <TargetFramework>net10.0</TargetFramework>
+	  <OpenSilverType>7</OpenSilverType>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <DefineSilverlight>true</DefineSilverlight>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Maui" Version="13.0.0" />
+    <PackageReference Include="FilePickers" Version="1.0.1" />
+    <PackageReference Include="OpenSilver" Version="3.2.2" />
+    <PackageReference Include="OpenSilver.Themes.Modern" Version="3.2.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
+    <Page Include="MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\MonstersPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="App.xaml.cs" />
+    <Compile Include="FilePickerProvider.cs" />
+    <Compile Include="MainPage.xaml.cs" />
+    <Compile Include="Pages\Converters.cs" />
+    <Compile Include="Pages\MonstersListViewModel.cs" />
+    <Compile Include="Pages\MonstersPage.xaml.cs" />
+    <Compile Include="Pages\MonstersViewModel.cs" />
+    <Compile Include="Services\MonsterRepository.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Patterns\MV\Pattern_d2.png" />
+    <Resource Include="Resources\Patterns\MV\Pattern_d3.png" />
+    <Resource Include="Resources\Patterns\MV\Pattern_l2.png" />
+    <Resource Include="Resources\Patterns\MV\Pattern_o2.png" />
+    <Resource Include="Resources\Patterns\MV\Pattern_o3.png" />
+    <Resource Include="Resources\Patterns\MV\Pattern_p1.png" />
+    <Resource Include="Resources\Patterns\MV\Pattern_p2.png" />
+    <Resource Include="Resources\Patterns\MV\Pattern_p3+x3.png" />
+    <Resource Include="Resources\Patterns\MV\Pattern_p3.png" />
+    <Resource Include="Resources\Patterns\MV\Pattern_p4.png" />
+    <Resource Include="Resources\Patterns\MV\Pattern_s1+p3.png" />
+    <Resource Include="Resources\Patterns\MV\Pattern_s1+x3.png" />
+    <Resource Include="Resources\Patterns\MV\Pattern_s1.png" />
+    <Resource Include="Resources\Patterns\MV\Pattern_s2.png" />
+    <Resource Include="Resources\Patterns\MV\Pattern_x1.png" />
+    <Resource Include="Resources\Patterns\MV\Pattern_x2.png" />
+    <Resource Include="Resources\Patterns\MV\Pattern_x3.png" />
+    <Resource Include="Resources\Patterns\MV\Pattern_x4.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Patterns\ATK\Pattern_d2.png" />
+    <Resource Include="Resources\Patterns\ATK\Pattern_d3.png" />
+    <Resource Include="Resources\Patterns\ATK\Pattern_l2.png" />
+    <Resource Include="Resources\Patterns\ATK\Pattern_o2.png" />
+    <Resource Include="Resources\Patterns\ATK\Pattern_o3.png" />
+    <Resource Include="Resources\Patterns\ATK\Pattern_p1.png" />
+    <Resource Include="Resources\Patterns\ATK\Pattern_p2.png" />
+    <Resource Include="Resources\Patterns\ATK\Pattern_p3+x3.png" />
+    <Resource Include="Resources\Patterns\ATK\Pattern_p3.png" />
+    <Resource Include="Resources\Patterns\ATK\Pattern_p4.png" />
+    <Resource Include="Resources\Patterns\ATK\Pattern_s1+p3.png" />
+    <Resource Include="Resources\Patterns\ATK\Pattern_s1+x3.png" />
+    <Resource Include="Resources\Patterns\ATK\Pattern_s1.png" />
+    <Resource Include="Resources\Patterns\ATK\Pattern_s2.png" />
+    <Resource Include="Resources\Patterns\ATK\Pattern_x1.png" />
+    <Resource Include="Resources\Patterns\ATK\Pattern_x2.png" />
+    <Resource Include="Resources\Patterns\ATK\Pattern_x3.png" />
+    <Resource Include="Resources\Patterns\ATK\Pattern_x4.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Monsters\7_Colored_Fish.jpg" />
+    <Resource Include="Resources\Monsters\Airknight_Parshath.jpg" />
+    <Resource Include="Resources\Monsters\Akakieisu.jpg" />
+    <Resource Include="Resources\Monsters\Akihiron.jpg" />
+    <Resource Include="Resources\Monsters\Ancient_Elf.jpg" />
+    <Resource Include="Resources\Monsters\Ancient_Tree_of_Enlightenment.jpg" />
+    <Resource Include="Resources\Monsters\Anthrosaurus.jpg" />
+    <Resource Include="Resources\Monsters\Aqua_Dragon.jpg" />
+    <Resource Include="Resources\Monsters\Aqua_Snake.jpg" />
+    <Resource Include="Resources\Monsters\Arlownay.jpg" />
+    <Resource Include="Resources\Monsters\Arma_Knight.jpg" />
+    <Resource Include="Resources\Monsters\Arsenal_Bug.jpg" />
+    <Resource Include="Resources\Monsters\B._Skull_Dragon.jpg" />
+    <Resource Include="Resources\Monsters\Baby_Dragon.jpg" />
+    <Resource Include="Resources\Monsters\Barrel_Dragon.jpg" />
+    <Resource Include="Resources\Monsters\Bat.jpg" />
+    <Resource Include="Resources\Monsters\Battle_Ox.jpg" />
+    <Resource Include="Resources\Monsters\Battle_Steer.jpg" />
+    <Resource Include="Resources\Monsters\Bean_Soldier.jpg" />
+    <Resource Include="Resources\Monsters\Beaver_Warrior.jpg" />
+    <Resource Include="Resources\Monsters\Big_Insect.jpg" />
+    <Resource Include="Resources\Monsters\Birdface.jpg" />
+    <Resource Include="Resources\Monsters\Black_Luster_Soldier.jpg" />
+    <Resource Include="Resources\Monsters\Bladefly.jpg" />
+    <Resource Include="Resources\Monsters\Blast_Juggler.jpg" />
+    <Resource Include="Resources\Monsters\Blast_Sphere.jpg" />
+    <Resource Include="Resources\Monsters\Blue-Eyes_Ultimate_Dragon.jpg" />
+    <Resource Include="Resources\Monsters\Blue-Eyes_White_Dragon.jpg" />
+    <Resource Include="Resources\Monsters\Bolt_Escargot.jpg" />
+    <Resource Include="Resources\Monsters\Bolt_Penguin.jpg" />
+    <Resource Include="Resources\Monsters\Carat_Idol.jpg" />
+    <Resource Include="Resources\Monsters\Catapult_Turtle.jpg" />
+    <Resource Include="Resources\Monsters\Celtic_Guardian.jpg" />
+    <Resource Include="Resources\Monsters\Change_Slime.jpg" />
+    <Resource Include="Resources\Monsters\Charubin_the_Fire_Knight.jpg" />
+    <Resource Include="Resources\Monsters\Claw_Reacher.jpg" />
+    <Resource Include="Resources\Monsters\Cockroach_Knight.jpg" />
+    <Resource Include="Resources\Monsters\Crab_Turtle.jpg" />
+    <Resource Include="Resources\Monsters\Crawling_Dragon.jpg" />
+    <Resource Include="Resources\Monsters\Crimson_Sunbird.jpg" />
+    <Resource Include="Resources\Monsters\Crow_Goblin.jpg" />
+    <Resource Include="Resources\Monsters\Curse_of_Dragon.jpg" />
+    <Resource Include="Resources\Monsters\Cyber_Saurus.jpg" />
+    <Resource Include="Resources\Monsters\Cyber_Soldier.jpg" />
+    <Resource Include="Resources\Monsters\Dancing_Elf.jpg" />
+    <Resource Include="Resources\Monsters\Darkfire_Dragon.jpg" />
+    <Resource Include="Resources\Monsters\Dark_Elf.jpg" />
+    <Resource Include="Resources\Monsters\Dark_Gray.jpg" />
+    <Resource Include="Resources\Monsters\Dark_Magician.jpg" />
+    <Resource Include="Resources\Monsters\Dark_Magician_Girl.jpg" />
+    <Resource Include="Resources\Monsters\Dark_Witch.jpg" />
+    <Resource Include="Resources\Monsters\Destroyer_Golem.jpg" />
+    <Resource Include="Resources\Monsters\Dice_Armadillo.jpg" />
+    <Resource Include="Resources\Monsters\Dragon_Piper.jpg" />
+    <Resource Include="Resources\Monsters\Dragon_Zombie.jpg" />
+    <Resource Include="Resources\Monsters\Droll_Bird.jpg" />
+    <Resource Include="Resources\Monsters\Dungeon_Worm.jpg" />
+    <Resource Include="Resources\Monsters\Electric_Lizard.jpg" />
+    <Resource Include="Resources\Monsters\Electric_Snake.jpg" />
+    <Resource Include="Resources\Monsters\Exodia_the_Forbidden_One.jpg" />
+    <Resource Include="Resources\Monsters\Fairy%27s_Gift.jpg" />
+    <Resource Include="Resources\Monsters\Fairy_Dragon.jpg" />
+    <Resource Include="Resources\Monsters\Faith_Bird.jpg" />
+    <Resource Include="Resources\Monsters\Feral_Imp.jpg" />
+    <Resource Include="Resources\Monsters\Fiend_Kraken.jpg" />
+    <Resource Include="Resources\Monsters\Fiend_Reflection_2.jpg" />
+    <Resource Include="Resources\Monsters\Firegrass.jpg" />
+    <Resource Include="Resources\Monsters\Firewing_Pegasus.jpg" />
+    <Resource Include="Resources\Monsters\Fireyarou.jpg" />
+    <Resource Include="Resources\Monsters\Fire_Eye.jpg" />
+    <Resource Include="Resources\Monsters\Fire_Kraken.jpg" />
+    <Resource Include="Resources\Monsters\Fire_Reaper.jpg" />
+    <Resource Include="Resources\Monsters\Flame_Cerebrus.jpg" />
+    <Resource Include="Resources\Monsters\Flame_Manipulator.jpg" />
+    <Resource Include="Resources\Monsters\Flame_Swordsman.jpg" />
+    <Resource Include="Resources\Monsters\Flame_Viper.jpg" />
+    <Resource Include="Resources\Monsters\Flying_Penguin.jpg" />
+    <Resource Include="Resources\Monsters\Fortress_Whale.jpg" />
+    <Resource Include="Resources\Monsters\Gaia_the_Dragon_Champion.jpg" />
+    <Resource Include="Resources\Monsters\Gaia_The_Fierce_Knight.jpg" />
+    <Resource Include="Resources\Monsters\Garoozis.jpg" />
+    <Resource Include="Resources\Monsters\Gate_Guardian.jpg" />
+    <Resource Include="Resources\Monsters\Gazelle_the_King_of_Mythical_Beasts.jpg" />
+    <Resource Include="Resources\Monsters\Gear_Golem_the_Moving_Fortress.jpg" />
+    <Resource Include="Resources\Monsters\Genin.jpg" />
+    <Resource Include="Resources\Monsters\Giant_Flea.jpg" />
+    <Resource Include="Resources\Monsters\Giant_Mech-Soldier.jpg" />
+    <Resource Include="Resources\Monsters\Giant_Soldier_of_Stone.jpg" />
+    <Resource Include="Resources\Monsters\Giga-Tech_Wolf.jpg" />
+    <Resource Include="Resources\Monsters\Giltia_the_D._Knight.jpg" />
+    <Resource Include="Resources\Monsters\Gokibore.jpg" />
+    <Resource Include="Resources\Monsters\Golgoil.jpg" />
+    <Resource Include="Resources\Monsters\Grappler.jpg" />
+    <Resource Include="Resources\Monsters\Great_Moth.jpg" />
+    <Resource Include="Resources\Monsters\Great_White.jpg" />
+    <Resource Include="Resources\Monsters\Green_Phantom_King.jpg" />
+    <Resource Include="Resources\Monsters\Gruesome_Goo.jpg" />
+    <Resource Include="Resources\Monsters\Guardian_of_the_Sea.jpg" />
+    <Resource Include="Resources\Monsters\Guardian_of_the_Throne_Room.jpg" />
+    <Resource Include="Resources\Monsters\Gyakutenno_Megami.jpg" />
+    <Resource Include="Resources\Monsters\Haniwa.jpg" />
+    <Resource Include="Resources\Monsters\Happy_Lover.jpg" />
+    <Resource Include="Resources\Monsters\Harpie%27s_Pet_Dragon.jpg" />
+    <Resource Include="Resources\Monsters\Harpie_Lady.jpg" />
+    <Resource Include="Resources\Monsters\Harpie_Lady_Sisters.jpg" />
+    <Resource Include="Resources\Monsters\Hercules_Beetle.jpg" />
+    <Resource Include="Resources\Monsters\High_Tide_Gyojin.jpg" />
+    <Resource Include="Resources\Monsters\Hinotama_Soul.jpg" />
+    <Resource Include="Resources\Monsters\Hitotsu-Me_Giant.jpg" />
+    <Resource Include="Resources\Monsters\Hoshiningen.jpg" />
+    <Resource Include="Resources\Monsters\Hunter_Spider.jpg" />
+    <Resource Include="Resources\Monsters\Hyosube.jpg" />
+    <Resource Include="Resources\Monsters\Illusionist_Faceless_Mage.jpg" />
+    <Resource Include="Resources\Monsters\Ill_Witch.jpg" />
+    <Resource Include="Resources\Monsters\Insect_Soldiers_of_the_Sky.jpg" />
+    <Resource Include="Resources\Monsters\Javelin_Beetle.jpg" />
+    <Resource Include="Resources\Monsters\Jellyfish.jpg" />
+    <Resource Include="Resources\Monsters\Jigen_Bakudan.jpg" />
+    <Resource Include="Resources\Monsters\Judge_Man.jpg" />
+    <Resource Include="Resources\Monsters\Kairyu-Shin.jpg" />
+    <Resource Include="Resources\Monsters\Kaiser_Dragon.jpg" />
+    <Resource Include="Resources\Monsters\Kamakiriman.jpg" />
+    <Resource Include="Resources\Monsters\Kaminarikozou.jpg" />
+    <Resource Include="Resources\Monsters\Kaminari_Attack.jpg" />
+    <Resource Include="Resources\Monsters\Kanikabuto.jpg" />
+    <Resource Include="Resources\Monsters\Kappa_Avenger.jpg" />
+    <Resource Include="Resources\Monsters\Kazejin.jpg" />
+    <Resource Include="Resources\Monsters\Killer_Needle.jpg" />
+    <Resource Include="Resources\Monsters\Kinetic_Soldier.jpg" />
+    <Resource Include="Resources\Monsters\King_Tiger_Wanghu.jpg" />
+    <Resource Include="Resources\Monsters\Korogashi.jpg" />
+    <Resource Include="Resources\Monsters\Koumori_Dragon.jpg" />
+    <Resource Include="Resources\Monsters\Krokodilus.jpg" />
+    <Resource Include="Resources\Monsters\Kumootoko.jpg" />
+    <Resource Include="Resources\Monsters\Kurama.jpg" />
+    <Resource Include="Resources\Monsters\Kuriboh.jpg" />
+    <Resource Include="Resources\Monsters\Kuwagata_Alpha.jpg" />
+    <Resource Include="Resources\Monsters\Kwagar_Hercules.jpg" />
+    <Resource Include="Resources\Monsters\Labyrinth_Tank.jpg" />
+    <Resource Include="Resources\Monsters\LaLa_Li-oon.jpg" />
+    <Resource Include="Resources\Monsters\LaMoon.jpg" />
+    <Resource Include="Resources\Monsters\Larvae_Moth.jpg" />
+    <Resource Include="Resources\Monsters\Larvas.jpg" />
+    <Resource Include="Resources\Monsters\Launcher_Spider.jpg" />
+    <Resource Include="Resources\Monsters\La_Jinn_the_Mystical_Genie_of_the_Lamp.jpg" />
+    <Resource Include="Resources\Monsters\Left_Arm_of_the_Forbidden_One.jpg" />
+    <Resource Include="Resources\Monsters\Left_Leg_of_the_Forbidden_One.jpg" />
+    <Resource Include="Resources\Monsters\Leghul.jpg" />
+    <Resource Include="Resources\Monsters\Lesser_Dragon.jpg" />
+    <Resource Include="Resources\Monsters\Little_Chimera.jpg" />
+    <Resource Include="Resources\Monsters\Lord_of_the_Lamp.jpg" />
+    <Resource Include="Resources\Monsters\Lucky_Trinket.jpg" />
+    <Resource Include="Resources\Monsters\Luminous_Soldier.jpg" />
+    <Resource Include="Resources\Monsters\Machine_Attacker.jpg" />
+    <Resource Include="Resources\Monsters\Machine_King.jpg" />
+    <Resource Include="Resources\Monsters\Magician_of_Black_Chaos.jpg" />
+    <Resource Include="Resources\Monsters\Magician_of_Faith.jpg" />
+    <Resource Include="Resources\Monsters\Man-Eater_Bug.jpg" />
+    <Resource Include="Resources\Monsters\Man-eating_Black_Shark.jpg" />
+    <Resource Include="Resources\Monsters\Manga_Ryu-Ran.jpg" />
+    <Resource Include="Resources\Monsters\Man_Eater.jpg" />
+    <Resource Include="Resources\Monsters\Masaki_the_Legendary_Swordsman.jpg" />
+    <Resource Include="Resources\Monsters\Mavelus.jpg" />
+    <Resource Include="Resources\Monsters\Mechanical_Snail.jpg" />
+    <Resource Include="Resources\Monsters\Mechanical_Spider.jpg" />
+    <Resource Include="Resources\Monsters\Mech_Bass.jpg" />
+    <Resource Include="Resources\Monsters\Megasonic_Eye.jpg" />
+    <Resource Include="Resources\Monsters\Megazowler.jpg" />
+    <Resource Include="Resources\Monsters\Mega_Thunderball.jpg" />
+    <Resource Include="Resources\Monsters\Metalzoa.jpg" />
+    <Resource Include="Resources\Monsters\Metal_Dragon.jpg" />
+    <Resource Include="Resources\Monsters\Metal_Guardian.jpg" />
+    <Resource Include="Resources\Monsters\Meteor_B._Dragon.jpg" />
+    <Resource Include="Resources\Monsters\Meteor_Dragon.jpg" />
+    <Resource Include="Resources\Monsters\Millennium_Golem.jpg" />
+    <Resource Include="Resources\Monsters\Minar.jpg" />
+    <Resource Include="Resources\Monsters\Moisture_Creature.jpg" />
+    <Resource Include="Resources\Monsters\Molten_Behemoth.jpg" />
+    <Resource Include="Resources\Monsters\Mon_Larvas.jpg" />
+    <Resource Include="Resources\Monsters\Moon_Envoy.jpg" />
+    <Resource Include="Resources\Monsters\Mushroom_Man.jpg" />
+    <Resource Include="Resources\Monsters\Mystical_Elf.jpg" />
+    <Resource Include="Resources\Monsters\Mystic_Horseman.jpg" />
+    <Resource Include="Resources\Monsters\Needle_Ball.jpg" />
+    <Resource Include="Resources\Monsters\Needle_Worm.jpg" />
+    <Resource Include="Resources\Monsters\Ocubeam.jpg" />
+    <Resource Include="Resources\Monsters\One-Eyed_Shield_Dragon.jpg" />
+    <Resource Include="Resources\Monsters\Ooguchi.jpg" />
+    <Resource Include="Resources\Monsters\Oscillo_Hero_2.jpg" />
+    <Resource Include="Resources\Monsters\Panther_Warrior.jpg" />
+    <Resource Include="Resources\Monsters\Parrot_Dragon.jpg" />
+    <Resource Include="Resources\Monsters\Patrol_Robo.jpg" />
+    <Resource Include="Resources\Monsters\Pendulum_Machine.jpg" />
+    <Resource Include="Resources\Monsters\Penguin_Knight.jpg" />
+    <Resource Include="Resources\Monsters\Penguin_Soldier.jpg" />
+    <Resource Include="Resources\Monsters\Perfectly_Ultimate_Great_Moth.jpg" />
+    <Resource Include="Resources\Monsters\Performance_of_Sword.jpg" />
+    <Resource Include="Resources\Monsters\Petit_Angel.jpg" />
+    <Resource Include="Resources\Monsters\Petit_Dragon.jpg" />
+    <Resource Include="Resources\Monsters\Petit_Moth.jpg" />
+    <Resource Include="Resources\Monsters\Prisman.jpg" />
+    <Resource Include="Resources\Monsters\Psychic_Kappa.jpg" />
+    <Resource Include="Resources\Monsters\Pumpking_the_King_of_Ghosts.jpg" />
+    <Resource Include="Resources\Monsters\Punished_Eagle.jpg" />
+    <Resource Include="Resources\Monsters\Queen_of_Autumn_Leaves.jpg" />
+    <Resource Include="Resources\Monsters\Rabid_Horseman.jpg" />
+    <Resource Include="Resources\Monsters\Red-Eyes_B._Dragon.jpg" />
+    <Resource Include="Resources\Monsters\Red-Eyes_Black_Metal_Dragon.jpg" />
+    <Resource Include="Resources\Monsters\Right_Arm_of_the_Forbidden_One.jpg" />
+    <Resource Include="Resources\Monsters\Right_Leg_of_the_Forbidden_One.jpg" />
+    <Resource Include="Resources\Monsters\Rigras_Leever.jpg" />
+    <Resource Include="Resources\Monsters\Robotic_Knight.jpg" />
+    <Resource Include="Resources\Monsters\Rock_Ogre_Grotto_1.jpg" />
+    <Resource Include="Resources\Monsters\Rock_Spirit.jpg" />
+    <Resource Include="Resources\Monsters\Rogue_Doll.jpg" />
+    <Resource Include="Resources\Monsters\Root_Water.jpg" />
+    <Resource Include="Resources\Monsters\Rose_Spectre_of_Dunn.jpg" />
+    <Resource Include="Resources\Monsters\Royal_Guard.jpg" />
+    <Resource Include="Resources\Monsters\Ryu-Kishin.jpg" />
+    <Resource Include="Resources\Monsters\Ryu-Kishin_Powered.jpg" />
+    <Resource Include="Resources\Monsters\Ryu-Ran.jpg" />
+    <Resource Include="Resources\Monsters\Sanga_of_the_Thunder.jpg" />
+    <Resource Include="Resources\Monsters\Seiyaryu.jpg" />
+    <Resource Include="Resources\Monsters\Sengenjin.jpg" />
+    <Resource Include="Resources\Monsters\Serpentine_Princess.jpg" />
+    <Resource Include="Resources\Monsters\Serpent_Marauder.jpg" />
+    <Resource Include="Resources\Monsters\Shining_Friendship.jpg" />
+    <Resource Include="Resources\Monsters\Shovel_Crusher.jpg" />
+    <Resource Include="Resources\Monsters\Sinister_Serpent.jpg" />
+    <Resource Include="Resources\Monsters\Skelengel.jpg" />
+    <Resource Include="Resources\Monsters\Skull_Guardian.jpg" />
+    <Resource Include="Resources\Monsters\Skull_Stalker.jpg" />
+    <Resource Include="Resources\Monsters\Sky_Dragon.jpg" />
+    <Resource Include="Resources\Monsters\Slot_Machine.jpg" />
+    <Resource Include="Resources\Monsters\Sonic_Maid.jpg" />
+    <Resource Include="Resources\Monsters\Spiked_Snail.jpg" />
+    <Resource Include="Resources\Monsters\Steel_Ogre_Grotto_1.jpg" />
+    <Resource Include="Resources\Monsters\Steel_Ogre_Grotto_2.jpg" />
+    <Resource Include="Resources\Monsters\Steel_Scorpion.jpg" />
+    <Resource Include="Resources\Monsters\Stone_D..jpg" />
+    <Resource Include="Resources\Monsters\Suijin.jpg" />
+    <Resource Include="Resources\Monsters\Summoned_Lord_Exodia.jpg" />
+    <Resource Include="Resources\Monsters\Summoned_Skull.jpg" />
+    <Resource Include="Resources\Monsters\Super_War-Lion.jpg" />
+    <Resource Include="Resources\Monsters\Sword_Arm_of_Dragon.jpg" />
+    <Resource Include="Resources\Monsters\Tactical_Warrior.jpg" />
+    <Resource Include="Resources\Monsters\Terra_the_Terrible.jpg" />
+    <Resource Include="Resources\Monsters\The_Immortal_of_Thunder.jpg" />
+    <Resource Include="Resources\Monsters\The_Statue_of_Easter_Island.jpg" />
+    <Resource Include="Resources\Monsters\Thousand_Dragon.jpg" />
+    <Resource Include="Resources\Monsters\Thunder_Dragon.jpg" />
+    <Resource Include="Resources\Monsters\Time_Wizard.jpg" />
+    <Resource Include="Resources\Monsters\Toad_Master.jpg" />
+    <Resource Include="Resources\Monsters\Tongyo.jpg" />
+    <Resource Include="Resources\Monsters\Torike.jpg" />
+    <Resource Include="Resources\Monsters\Trent.jpg" />
+    <Resource Include="Resources\Monsters\Tri-Horned_Dragon.jpg" />
+    <Resource Include="Resources\Monsters\Tripwire_Beast.jpg" />
+    <Resource Include="Resources\Monsters\Twin-Headed_Behemoth.jpg" />
+    <Resource Include="Resources\Monsters\Twin-Headed_Thunder_Dragon.jpg" />
+    <Resource Include="Resources\Monsters\Two-Headed_King_Rex.jpg" />
+    <Resource Include="Resources\Monsters\Two-Mouth_Darkruler.jpg" />
+    <Resource Include="Resources\Monsters\Tyhone.jpg" />
+    <Resource Include="Resources\Monsters\Tyhone_2.jpg" />
+    <Resource Include="Resources\Monsters\Ushi_Oni.jpg" />
+    <Resource Include="Resources\Monsters\Vermillion_Sparrow.jpg" />
+    <Resource Include="Resources\Monsters\Weather_Control.jpg" />
+    <Resource Include="Resources\Monsters\Whiptail_Crow.jpg" />
+    <Resource Include="Resources\Monsters\White_Dolphin.jpg" />
+    <Resource Include="Resources\Monsters\Wicked_Dragon_with_the_Ersatz_Head.jpg" />
+    <Resource Include="Resources\Monsters\Winged_Dragon,_Guardian_of_the_Fortress_1.jpg" />
+    <Resource Include="Resources\Monsters\Winged_Dragon,_Guardian_of_the_Fortress_2.jpg" />
+    <Resource Include="Resources\Monsters\Wing_Egg_Elf.jpg" />
+    <Resource Include="Resources\Monsters\Yado_Karu.jpg" />
+    <Resource Include="Resources\Monsters\Yamadron.jpg" />
+    <Resource Include="Resources\Monsters\Yormungarde.jpg" />
+    <Resource Include="Resources\Monsters\Zoa.jpg" />
+  </ItemGroup>
+
+</Project>

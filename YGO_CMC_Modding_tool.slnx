@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="YGO_CMC_Modding_tool/YGO_CMC_Modding_tool.Browser/YGO_CMC_Modding_tool.Browser.csproj" />
+  <Project Path="YGO_CMC_Modding_tool/YGO_CMC_Modding_tool.MauiHybrid/YGO_CMC_Modding_tool.MauiHybrid.csproj" />
+  <Project Path="YGO_CMC_Modding_tool/YGO_CMC_Modding_tool.Simulator/YGO_CMC_Modding_tool.Simulator.csproj" />
+  <Project Path="YGO_CMC_Modding_tool/YGO_CMC_Modding_tool/YGO_CMC_Modding_tool.csproj" />
+</Solution>
