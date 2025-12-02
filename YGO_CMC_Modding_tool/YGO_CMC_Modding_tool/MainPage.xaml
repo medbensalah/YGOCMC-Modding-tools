@@ -5,15 +5,8 @@
       xmlns:local="clr-namespace:YGO_CMC_Modding_tool"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:pages="clr-namespace:YGO_CMC_Modding_tool.Pages"
-      xmlns:vm="clr-namespace:YGO_CMC_Modding_tool.ViewModels"
       mc:Ignorable="d"
       Foreground="{DynamicResource Theme_TextBrush}">
-
-    <Page.Resources>
-        <pages:TypeByteToNameConverter x:Key="TypeNameConverter"/>
-        <pages:AttributeByteToNameConverter x:Key="AttributeNameConverter"/>
-        <pages:PatternByteToImageConverter x:Key="PatternImageConverter"/>
-    </Page.Resources>
 
     <Grid Background="{DynamicResource Theme_BackgroundBrush}">
         <Grid.RowDefinitions>
@@ -45,47 +38,13 @@
         <TabControl Grid.Row="1">
             <TabItem Header="Monsters">
                 <Frame>
-                    <pages:MonstersPage />
+                    <pages:MonstersPage  Name="MonstersDataPage"/>
                 </Frame>
             </TabItem>
-            <TabItem Header="Monsters List">
-                <Grid>
-                    <DataGrid x:Name="MonstersGrid" Margin="8" AutoGenerateColumns="False" IsReadOnly="False"
-                              ItemsSource="{x:Static vm:MonstersViewModel.LastLoaded}"
-                              CanUserSortColumns="True">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Type" Binding="{Binding Type, Converter={StaticResource TypeNameConverter}}" Width="100" SortMemberPath="Type"/>
-                            <DataGridTextColumn Header="Attribute" Binding="{Binding Attribute, Converter={StaticResource AttributeNameConverter}}" Width="120" SortMemberPath="Attribute"/>
-                            <DataGridTemplateColumn Header="Movement" Width="140" SortMemberPath="MovementPattern">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Image Stretch="Uniform" Height="40" Source="{Binding MovementPattern, Converter={StaticResource PatternImageConverter}, ConverterParameter=MV}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="Attack" Width="140" SortMemberPath="AttackPattern">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Image Stretch="Uniform" Height="40" Source="{Binding AttackPattern, Converter={StaticResource PatternImageConverter}, ConverterParameter=ATK}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTextColumn Header="PP" Binding="{Binding PP}" Width="80" SortMemberPath="PP"/>
-                            <DataGridTextColumn Header="AT" Binding="{Binding AT}" Width="80" SortMemberPath="AT"/>
-                            <DataGridTextColumn Header="DF" Binding="{Binding DF}" Width="80" SortMemberPath="DF"/>
-                            <DataGridTextColumn Header="AP" Binding="{Binding AP}" Width="80" SortMemberPath="AP"/>
-                            <DataGridTextColumn Header="pAP" Binding="{Binding pAP}" Width="80" SortMemberPath="pAP"/>
-                            <DataGridTextColumn Header="MP" Binding="{Binding MP}" Width="80" SortMemberPath="MP"/>
-                            <DataGridTextColumn Header="AESymbol" Binding="{Binding AESymbol}" Width="100" SortMemberPath="AESymbol"/>
-                            <DataGridTextColumn Header="AELand" Binding="{Binding AELand}" Width="100" SortMemberPath="AELand"/>
-                            <DataGridTextColumn Header="AEMap" Binding="{Binding AEMap}" Width="100" SortMemberPath="AEMap"/>
-                            <DataGridTextColumn Header="EXP" Binding="{Binding _exp}" Width="80" SortMemberPath="_exp"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Other">
-                <Grid />
+            <TabItem Header="Monsters">
+                <Frame>
+                    <pages:MonstersListPage/>
+                </Frame>
             </TabItem>
         </TabControl>
     </Grid>

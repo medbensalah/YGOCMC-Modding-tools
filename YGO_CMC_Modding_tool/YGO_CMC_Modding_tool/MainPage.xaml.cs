@@ -14,6 +14,7 @@ using YGO_CMC_Modding_tool.Services;
 using YGO_CMC_Modding_tool.ViewModels;
 using Microsoft.Maui.Devices;
 using System.Collections.Generic; // added for DevicePlatform
+using YGO_CMC_Modding_tool.Pages;
 
 namespace YGO_CMC_Modding_tool
 {
@@ -22,30 +23,40 @@ namespace YGO_CMC_Modding_tool
         private readonly MonsterRepository _monsterRepo = new MonsterRepository();
         private readonly MonstersViewModel _monstersVm = new MonstersViewModel();
 
-        public String SourceIsoPath => SourceIsoPathTextBox.Text;
-        public String DestinationIsoPath => DestinationIsoPathTextBox.Text;
+        public String SourceIsoPath
+        {
+            get => SourceIsoPathTextBox.Text;
+        }
+
+        public String DestinationIsoPath
+        {
+            get => DestinationIsoPathTextBox.Text;
+        }
 
         public MainPage()
         {
             this.InitializeComponent();
-            MonstersViewModel.MonstersChanged += RefreshMonstersGrid;
-        }
-
-        private void RefreshMonstersGrid()
-        {
-            if (MonstersViewModel.LastLoaded != null && MonstersGrid != null)
-            {
-                MonstersGrid.ItemsSource = null; // force refresh
-                MonstersGrid.ItemsSource = MonstersViewModel.LastLoaded;
-            }
         }
 
         private async void OnSelectIso(object sender, RoutedEventArgs e)
         {
-            var result = await FilePicker.Default.PickAsync();
-            if (result != null && result.FileName.EndsWith("iso", StringComparison.OrdinalIgnoreCase))
+            var result = await FilePicker.Default.PickAsync(new PickOptions()
             {
-                DestinationIsoPathTextBox.Text = result.FullPath;
+                FileTypes = new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
+                {
+                    { DevicePlatform.WinUI, new[] { ".iso" } },
+                    { DevicePlatform.MacCatalyst, new[] { ".iso" } },
+                    { DevicePlatform.iOS, new[] { ".iso" } },
+                    { DevicePlatform.Android, new[] { "application/octet-stream" } } // Android relies mainly on MIME types
+                }),
+                PickerTitle = "Select Destination ISO file"
+            });
+            if (result != null)
+            {
+                if (result.FileName.EndsWith("iso", StringComparison.OrdinalIgnoreCase))
+                {
+                    DestinationIsoPathTextBox.Text = result.FullPath;
+                }
             }
         }
 
@@ -58,16 +69,20 @@ namespace YGO_CMC_Modding_tool
                     { DevicePlatform.WinUI, new[] { ".iso" } },
                     { DevicePlatform.MacCatalyst, new[] { ".iso" } },
                     { DevicePlatform.iOS, new[] { ".iso" } },
-                    { DevicePlatform.Android, new[] { "application/octet-stream" } }
+                    { DevicePlatform.Android, new[] { "application/octet-stream" } } // Android relies mainly on MIME types
                 }),
-                PickerTitle = "Select ISO file"
+                PickerTitle = "Select Source ISO file"
             });
-            if (result != null && result.FileName.EndsWith("iso", StringComparison.OrdinalIgnoreCase))
+            if (result != null)
             {
-                SourceIsoPathTextBox.Text = result.FullPath;
-                _monstersVm.Load(result.FullPath, _monsterRepo);
-                RefreshMonstersGrid();
+                if (result.FileName.EndsWith("iso", StringComparison.OrdinalIgnoreCase))
+                {
+                    SourceIsoPathTextBox.Text = result.FullPath;
+                    _monstersVm.Load(result.FullPath, _monsterRepo);
+                    MonstersDataPage.SelectFirstMonster();
+                }
             }
+
         }
     }
 }

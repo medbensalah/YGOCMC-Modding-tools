@@ -1,0 +1,125 @@
+<Page x:Class="YGO_CMC_Modding_tool.Pages.MonstersListPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:YGO_CMC_Modding_tool.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="MonstersListPage">
+    <Page.Resources>
+        <local:AttributeToColorConverter x:Key="AttributeToColorConverter"/>
+        <local:AttributeToNameConverter x:Key="AttributeToNameConverter"/>
+        <local:AttributeToForegroundColorConverter x:Key="AttributeToForegroundColorConverter"/>
+        <local:PatternToImageConverter x:Key="PatternToImageConverter"/>
+
+        <Style x:Key="DataGridRowStyle" TargetType="DataGridRow">
+            <Setter Property="Background" Value="{Binding Attribute, Converter={StaticResource AttributeToColorConverter}}"/>
+            <Setter Property="Foreground" Value="{Binding Attribute, Converter={StaticResource AttributeToForegroundColorConverter}}"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+        <DataGrid x:Name="MonstersGrid" AutoGenerateColumns="False" RowStyle="{StaticResource DataGridRowStyle}" ItemsSource="{Binding}">
+            <DataGrid.Columns>
+                <!-- Index and Name (Read-Only) -->
+                <DataGridTextColumn Header="ID" Binding="{Binding ID}" SortMemberPath="ID" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" SortMemberPath="Name" IsReadOnly="True" Width="150"/>
+
+                <!-- Flag Checkbox -->
+                <DataGridCheckBoxColumn Header="IsUsed" Binding="{Binding IsUsed}" SortMemberPath="IsUsed"/>
+
+                <!-- Comments Column -->
+                <DataGridTextColumn Header="Comments" Binding="{Binding Comment}" SortMemberPath="Comment" Width="200"/>
+
+                <!-- Attribute Dropdown -->
+                <DataGridTemplateColumn Header="Attribute" SortMemberPath="Attribute">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Attribute, Converter={StaticResource AttributeToNameConverter}, ConverterParameter=Attribute}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox ItemsSource="{Binding DataContext.AttributeKeys, RelativeSource={RelativeSource AncestorType=local:MonstersListPage}}"
+                                      SelectedValue="{Binding Attribute, Converter={StaticResource AttributeToNameConverter}, ConverterParameter=Attribute}"
+                                      SelectionChanged="AttributeComboBox_SelectionChanged"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+
+                <!-- Type Dropdown -->
+                <DataGridTemplateColumn Header="Type" SortMemberPath="Type">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Type, Converter={StaticResource AttributeToNameConverter}, ConverterParameter=Type}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox ItemsSource="{Binding DataContext.TypeKeys, RelativeSource={RelativeSource AncestorType=local:MonstersListPage}}"
+                                      SelectedValue="{Binding Type, Converter={StaticResource AttributeToNameConverter}, ConverterParameter=Type}"
+                                      SelectionChanged="TypeComboBox_SelectionChanged"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+
+                <!-- Movement Pattern Image Dropdown -->
+                <DataGridTemplateColumn Header="Movement" SortMemberPath="MovementPattern">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding MovementPattern, Converter={StaticResource PatternToImageConverter}, ConverterParameter=MV}" Width="32" Height="32"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox ItemsSource="{Binding DataContext.PatternKeys, RelativeSource={RelativeSource AncestorType=local:MonstersListPage}}"
+                                      SelectedValue="{Binding MovementPattern, Converter={StaticResource AttributeToNameConverter}, ConverterParameter=Pattern}"
+                                      SelectionChanged="PatternComboBox_SelectionChanged" Tag="Movement">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Image Source="{Binding Converter={StaticResource PatternToImageConverter}, ConverterParameter=MV}" Width="32" Height="32"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+
+                <!-- Attack Pattern Image Dropdown -->
+                <DataGridTemplateColumn Header="Attack" SortMemberPath="AttackPattern">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding AttackPattern, Converter={StaticResource PatternToImageConverter}, ConverterParameter=ATK}" Width="32" Height="32"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox ItemsSource="{Binding DataContext.PatternKeys, RelativeSource={RelativeSource AncestorType=local:MonstersListPage}}"
+                                      SelectedValue="{Binding AttackPattern, Converter={StaticResource AttributeToNameConverter}, ConverterParameter=Pattern}"
+                                      SelectionChanged="PatternComboBox_SelectionChanged" Tag="Attack">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Image Source="{Binding Converter={StaticResource PatternToImageConverter}, ConverterParameter=ATK}" Width="32" Height="32"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+
+                <!-- Standard Editable Text Columns -->
+                <DataGridTextColumn Header="ATK" Binding="{Binding AT}" SortMemberPath="AT"/>
+                <DataGridTextColumn Header="DEF" Binding="{Binding DF}" SortMemberPath="DF"/>
+                <DataGridTextColumn Header="PP" Binding="{Binding PP}" SortMemberPath="PP"/>
+                <DataGridTextColumn Header="AP" Binding="{Binding AP}" SortMemberPath="AP"/>
+                <DataGridTextColumn Header="pAP" Binding="{Binding pAP}" SortMemberPath="pAP"/>
+                <DataGridTextColumn Header="MP" Binding="{Binding MP}" SortMemberPath="MP"/>
+                <DataGridTextColumn Header="EXP" Binding="{Binding Exp}" SortMemberPath="Exp"/>
+                <DataGridTextColumn Header="AE Symbol" Binding="{Binding AESymbol}" SortMemberPath="AESymbol"/>
+                <DataGridTextColumn Header="AE Land" Binding="{Binding AELand}" SortMemberPath="AELand"/>
+                <DataGridTextColumn Header="AE Map" Binding="{Binding AEMap}" SortMemberPath="AEMap"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>

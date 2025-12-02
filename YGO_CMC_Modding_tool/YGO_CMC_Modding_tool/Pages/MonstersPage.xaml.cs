@@ -1,14 +1,36 @@
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Data;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using YGO_CMC_Modding_tool.ViewModels;
 using YGO_CMC_Modding_tool.Services;
+using YGO_CMC_Modding_tool.ViewModels;
 using System.IO;
 
 namespace YGO_CMC_Modding_tool.Pages
 {
+    public class IsUsedToForegroundConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is bool isUsed && !isUsed)
+            {
+                return new SolidColorBrush(Colors.Red);
+            }
+            // Return the default value, allowing the parent's Foreground to be used.
+            return DependencyProperty.UnsetValue;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public partial class MonstersPage : Page
     {
         private int _currentIndex = -1;
@@ -16,16 +38,44 @@ namespace YGO_CMC_Modding_tool.Pages
         public MonstersPage()
         {
             InitializeComponent();
-            MonstersViewModel.MonstersChanged += OnGlobalMonstersChanged;
+            IsVisibleChanged += MonstersPage_IsVisibleChanged;
         }
 
-        private void OnGlobalMonstersChanged()
+        public void SelectFirstMonster()
         {
-            // Refresh current selection UI
-            if (_currentIndex >= 0)
+            if (MonstersListBox.Items.Count > 0)
             {
-                PopulateUIForIndex(_currentIndex);
+                MonstersListBox.SelectedIndex = 0;
             }
+        }
+
+        private void MonstersPage_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if ((bool)e.NewValue) // If page is becoming visible
+            {
+                // Sync all IsUsed flags from the source of truth (LastLoaded)
+                // to the display collection used by the ListBox.
+                if (MonstersViewModel.LastLoaded != null)
+                {
+                    for (int i = 0; i < MonstersViewModel.LastLoaded.Count; i++)
+                    {
+                        MonstersListViewModel.SetIsUsed(i, MonstersViewModel.LastLoaded[i].IsUsed);
+                    }
+                }
+
+                // Refresh the currently selected monster's full display
+                RefreshCurrentMonsterDisplay();
+            }
+        }
+
+        private void RefreshCurrentMonsterDisplay()
+        {
+            if (_currentIndex < 0) return;
+
+            // Re-populate UI with potentially modified data
+            PopulateUIForIndex(_currentIndex);
+            UpdateDirtyFlag(_currentIndex);
+            UpdateHeaderRevertVisibility();
         }
 
         private static bool IsMonsterDirty(int index)
@@ -50,7 +100,7 @@ namespace YGO_CMC_Modding_tool.Pages
                 || o.AESymbol != m.AESymbol
                 || o.AELand != m.AELand
                 || o.AEMap != m.AEMap
-                || o._exp != m._exp
+                || o.Exp != m.Exp
                 || o._2 != m._2
                 || o._3 != m._3;
         }
@@ -77,10 +127,13 @@ namespace YGO_CMC_Modding_tool.Pages
             var baseName = MonstersListViewModel.MonsterNames[index];
             MonsterName.Text = baseName;
 
+            // Update CheckBox state
+            IsUsedToggleButton.IsChecked = m.IsUsed;
+
             MonsterAP.Text = m.AP.ToString();
             MonsterpAP.Text = m.pAP.ToString();
             MonsterMP.Text = m.MP.ToString();
-            MonsterEXP.Text = m._exp.ToString();
+            MonsterEXP.Text = m.Exp.ToString();
             MonsterPP.Text = m.PP.ToString();
             MonsterATK.Text = m.AT.ToString();
             MonsterDEF.Text = m.DF.ToString();
@@ -112,6 +165,20 @@ namespace YGO_CMC_Modding_tool.Pages
             UpdateHeaderRevertVisibility();
         }
 
+        private void OnIsUsedToggled(object sender, RoutedEventArgs e)
+        {
+            if (_currentIndex < 0) return;
+            var list = MonstersViewModel.LastLoaded;
+            if (list == null || _currentIndex >= list.Count) return;
+
+            var monster = list[_currentIndex];
+            var isChecked = (sender as CheckBox).IsChecked ?? false;
+            monster.IsUsed = isChecked;
+
+            // Update the display item in the listbox
+            MonstersListViewModel.SetIsUsed(_currentIndex, isChecked);
+        }
+
         private void MonsterMovement_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (_currentIndex < 0) return;
@@ -121,12 +188,10 @@ namespace YGO_CMC_Modding_tool.Pages
             if (key == null) return;
             var m = list[_currentIndex];
             m.MovementPattern = MonstersListViewModel._patternMap[key];
-            list[_currentIndex] = m;
             var movePatternImgUri = new Uri($"/YGO_CMC_Modding_tool;component/Resources/Patterns/MV/Pattern_{key}.png", UriKind.Relative);
             MovementPattern.Source = new BitmapImage(movePatternImgUri);
             UpdateDirtyFlag(_currentIndex);
             UpdateHeaderRevertVisibility();
-            MonstersViewModel.NotifyChanged();
         }
 
         private void MonsterAttack_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -138,12 +203,10 @@ namespace YGO_CMC_Modding_tool.Pages
             if (key == null) return;
             var m = list[_currentIndex];
             m.AttackPattern = MonstersListViewModel._patternMap[key];
-            list[_currentIndex] = m;
             var attackPatternImgUri = new Uri($"/YGO_CMC_Modding_tool;component/Resources/Patterns/ATK/Pattern_{key}.png", UriKind.Relative);
             AttackPattern.Source = new BitmapImage(attackPatternImgUri);
             UpdateDirtyFlag(_currentIndex);
             UpdateHeaderRevertVisibility();
-            MonstersViewModel.NotifyChanged();
         }
 
         private void OnMonsterFieldChanged(object sender, TextChangedEventArgs e)
@@ -159,17 +222,15 @@ namespace YGO_CMC_Modding_tool.Pages
             if (sender == MonsterAP) m.AP = ParseUShort(MonsterAP);
             else if (sender == MonsterpAP) m.pAP = ParseUShort(MonsterpAP);
             else if (sender == MonsterMP) m.MP = ParseUShort(MonsterMP);
-            else if (sender == MonsterEXP) m._exp = (byte)ParseUShort(MonsterEXP);
+            else if (sender == MonsterEXP) m.Exp = (byte)ParseUShort(MonsterEXP);
             else if (sender == MonsterPP) m.PP = ParseUShort(MonsterPP);
             else if (sender == MonsterATK) m.AT = ParseUShort(MonsterATK);
             else if (sender == MonsterDEF) m.DF = ParseUShort(MonsterDEF);
             else if (sender == MonsterSEA) m.AESymbol = (byte)ParseUShort(MonsterSEA);
             else if (sender == MonsterTEA) m.AELand = (byte)ParseUShort(MonsterTEA);
             else if (sender == MonsterMEA) m.AEMap = (byte)ParseUShort(MonsterMEA);
-            list[_currentIndex] = m;
             UpdateDirtyFlag(_currentIndex);
             UpdateHeaderRevertVisibility();
-            MonstersViewModel.NotifyChanged();
         }
 
         private void OnMonsterAttributeChanged(object sender, SelectionChangedEventArgs e)
@@ -181,10 +242,8 @@ namespace YGO_CMC_Modding_tool.Pages
             if (idx < 0) return;
             var m = list[_currentIndex];
             m.Attribute = (byte)idx;
-            list[_currentIndex] = m;
             UpdateDirtyFlag(_currentIndex);
             UpdateHeaderRevertVisibility();
-            MonstersViewModel.NotifyChanged();
         }
 
         private void OnMonsterTypeChanged(object sender, SelectionChangedEventArgs e)
@@ -196,10 +255,8 @@ namespace YGO_CMC_Modding_tool.Pages
             if (idx < 0) return;
             var m = list[_currentIndex];
             m.Type = (byte)idx;
-            list[_currentIndex] = m;
             UpdateDirtyFlag(_currentIndex);
             UpdateHeaderRevertVisibility();
-            MonstersViewModel.NotifyChanged();
         }
 
         // Revert header button handler for the currently selected monster
@@ -210,12 +267,11 @@ namespace YGO_CMC_Modding_tool.Pages
             var cur = MonstersViewModel.LastLoaded;
             if (orig == null || cur == null) return;
             if (_currentIndex >= orig.Count || _currentIndex >= cur.Count) return;
-            cur[_currentIndex] = orig[_currentIndex];
+            cur[_currentIndex] = new MonstersViewModel.Monster(orig[_currentIndex]);
             // Immediately refresh displayed UI without changing selection
             PopulateUIForIndex(_currentIndex);
             UpdateDirtyFlag(_currentIndex);
             UpdateHeaderRevertVisibility();
-            MonstersViewModel.NotifyChanged();
         }
 
         // Patch All Monsters button click handler implementation

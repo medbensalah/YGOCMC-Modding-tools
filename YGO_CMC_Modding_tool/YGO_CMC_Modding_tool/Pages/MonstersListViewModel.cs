@@ -25,6 +25,21 @@ namespace YGO_CMC_Modding_tool.ViewModels
                     }
                 }
             }
+
+            private bool _isUsed = true;
+            public bool IsUsed
+            {
+                get => _isUsed;
+                set
+                {
+                    if (_isUsed != value)
+                    {
+                        _isUsed = value;
+                        OnPropertyChanged(nameof(IsUsed));
+                    }
+                }
+            }
+
             public string Display => string.Format("{0:D3} {1}{2}", Index, BaseName, IsDirty ? " *" : "");
             public MonsterDisplayItem(int index, string name)
             {
@@ -332,6 +347,12 @@ namespace YGO_CMC_Modding_tool.ViewModels
             MonsterDisplayNames[index].IsDirty = dirty;
         }
 
+        public static void SetIsUsed(int index, bool isUsed)
+        {
+            if (index < 0 || index >= MonsterDisplayNames.Count) return;
+            MonsterDisplayNames[index].IsUsed = isUsed;
+        }
+
         public static Dictionary<string, byte> _typeMap = new Dictionary<string, byte>()
         {
             { "Symbol",             0 },
@@ -391,11 +412,11 @@ namespace YGO_CMC_Modding_tool.ViewModels
             { "THUNDER",    7 },
         };
 
-        public IEnumerable<string> AttributeKeys => _attributeMap.Keys;
-        public IEnumerable<string> TypeKeys => _typeMap.Keys;
-        public IEnumerable<string> PatternKeys => _patternMap.Keys;
+        public static IEnumerable<string> AttributeKeys => _attributeMap.Keys;
+        public static IEnumerable<string> TypeKeys => _typeMap.Keys;
+        public static IEnumerable<string> PatternKeys => _patternMap.Keys;
 
-        public long FirstMonsterOffset { get; } = 0x44D080;
-        public int MonsterCount { get; } = 277;
+        public static long FirstMonsterOffset { get; } = 0x44D080;
+        public static int MonsterCount { get; } = 277;
     }
 }

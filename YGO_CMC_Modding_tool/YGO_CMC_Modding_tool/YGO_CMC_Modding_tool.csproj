@@ -21,6 +21,9 @@
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\MonstersListPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\MonstersPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -28,9 +31,8 @@
 
   <ItemGroup>
     <Compile Include="App.xaml.cs" />
-    <Compile Include="FilePickerProvider.cs" />
     <Compile Include="MainPage.xaml.cs" />
-    <Compile Include="Pages\Converters.cs" />
+    <Compile Include="Pages\MonstersListPage.xaml.cs" />
     <Compile Include="Pages\MonstersListViewModel.cs" />
     <Compile Include="Pages\MonstersPage.xaml.cs" />
     <Compile Include="Pages\MonstersViewModel.cs" />

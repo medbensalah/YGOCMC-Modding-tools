@@ -5,6 +5,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:pages="clr-namespace:YGO_CMC_Modding_tool.Pages"
       xmlns:vm="clr-namespace:YGO_CMC_Modding_tool.ViewModels"
+                    xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+                    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       mc:Ignorable="d"
       Foreground="{DynamicResource Theme_TextBrush}" d:DesignWidth="1360" d:DesignHeight="768">
 
@@ -15,10 +17,22 @@
     <Page.Resources>
         <!-- Converter for dirty flag visibility -->
         <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <pages:IsUsedToForegroundConverter x:Key="IsUsedToForegroundConverter"/>
+
+
         <DataTemplate x:Key="MonsterDisplayTemplate">
-            <!-- Sidebar only shows the name. No revert button here. -->
-            <TextBlock Text="{Binding Display}" FontSize="20" VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding Display}" FontSize="20" VerticalAlignment="Center">
+                 <i:Interaction.Triggers>
+                    <ei:DataTrigger Binding="{Binding IsUsed}" Value="False">
+                        <ei:ChangePropertyAction  PropertyName="Foreground" Value="Red"/>
+                    </ei:DataTrigger>
+                    <ei:DataTrigger Binding="{Binding IsUsed}" Value="True">
+                        <ei:ChangePropertyAction  PropertyName="Foreground" Value="White"/>
+                    </ei:DataTrigger>
+                </i:Interaction.Triggers>
+            </TextBlock>
         </DataTemplate>
+
         <!-- Common item container style for all ComboBoxes -->
         <Style x:Key="ComboItemStyle" TargetType="ComboBoxItem">
             <Setter Property="FontSize" Value="24"/>
@@ -95,6 +109,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock x:Name="MonsterName"
                            Grid.Column="0"
@@ -102,8 +117,16 @@
                            FontSize="48" FontWeight="Bold"
                            HorizontalAlignment="Stretch"
                            VerticalAlignment="Top"/>
+                <CheckBox x:Name="IsUsedToggleButton"
+                              Grid.Column="1"
+                              IsThreeState="False"
+                              Click="OnIsUsedToggled"
+                              Content="IsUsed"
+                              Margin="12,0,0,0"
+                              Padding="12,4"
+                              VerticalAlignment="Top"/>
                 <Button x:Name="HeaderRevertButton"
-                        Grid.Column="1"
+                        Grid.Column="2"
                         Content="Revert"
                         Margin="12,0,0,0"
                         Padding="12,4"
@@ -210,7 +233,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="Effect Rates" FontSize="32" FontWeight="Bold" VerticalAlignment="Center" Margin="0 0 0 32"/>
-                    
+
                 <!--Symbol Effect Rate-->
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="Symbol Effect Rate" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
                 <TextBox x:Name="MonsterSEA" Grid.Row="1" Grid.Column="1" FontSize="28" Text="100" TextAlignment="Center" Padding="-8" Margin="8" TextChanged="OnMonsterFieldChanged"/>
