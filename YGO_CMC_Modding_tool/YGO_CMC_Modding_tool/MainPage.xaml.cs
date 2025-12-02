@@ -22,31 +22,30 @@ namespace YGO_CMC_Modding_tool
         private readonly MonsterRepository _monsterRepo = new MonsterRepository();
         private readonly MonstersViewModel _monstersVm = new MonstersViewModel();
 
-        public String SourceIsoPath
-        {
-            get => SourceIsoPathTextBox.Text;
-        }
-
-        public String DestinationIsoPath
-        {
-            get => DestinationIsoPathTextBox.Text;
-        }
+        public String SourceIsoPath => SourceIsoPathTextBox.Text;
+        public String DestinationIsoPath => DestinationIsoPathTextBox.Text;
 
         public MainPage()
         {
             this.InitializeComponent();
+            MonstersViewModel.MonstersChanged += RefreshMonstersGrid;
+        }
+
+        private void RefreshMonstersGrid()
+        {
+            if (MonstersViewModel.LastLoaded != null && MonstersGrid != null)
+            {
+                MonstersGrid.ItemsSource = null; // force refresh
+                MonstersGrid.ItemsSource = MonstersViewModel.LastLoaded;
+            }
         }
 
         private async void OnSelectIso(object sender, RoutedEventArgs e)
         {
             var result = await FilePicker.Default.PickAsync();
-            if (result != null)
+            if (result != null && result.FileName.EndsWith("iso", StringComparison.OrdinalIgnoreCase))
             {
-
-                if (result.FileName.EndsWith("iso", StringComparison.OrdinalIgnoreCase))
-                {
-                    DestinationIsoPathTextBox.Text = result.FullPath;
-                }
+                DestinationIsoPathTextBox.Text = result.FullPath;
             }
         }
 
@@ -63,21 +62,12 @@ namespace YGO_CMC_Modding_tool
                 }),
                 PickerTitle = "Select ISO file"
             });
-            if (result != null)
+            if (result != null && result.FileName.EndsWith("iso", StringComparison.OrdinalIgnoreCase))
             {
-                if (result.FileName.EndsWith("iso", StringComparison.OrdinalIgnoreCase))
-                {
-                    SourceIsoPathTextBox.Text = result.FullPath;
-                    _monstersVm.Load(result.FullPath, _monsterRepo);
-                    // Bind grid on the Monsters List tab
-                    var monstersTabGrid = (System.Windows.Controls.DataGrid)FindName("MonstersGrid");
-                    if (MonstersViewModel.LastLoaded != null)
-                    {
-                        MonstersGrid.ItemsSource = MonstersViewModel.LastLoaded;
-                    }
-                }
+                SourceIsoPathTextBox.Text = result.FullPath;
+                _monstersVm.Load(result.FullPath, _monsterRepo);
+                RefreshMonstersGrid();
             }
-
         }
     }
 }

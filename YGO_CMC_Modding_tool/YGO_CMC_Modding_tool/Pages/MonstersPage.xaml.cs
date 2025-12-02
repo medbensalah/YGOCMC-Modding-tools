@@ -16,6 +16,16 @@ namespace YGO_CMC_Modding_tool.Pages
         public MonstersPage()
         {
             InitializeComponent();
+            MonstersViewModel.MonstersChanged += OnGlobalMonstersChanged;
+        }
+
+        private void OnGlobalMonstersChanged()
+        {
+            // Refresh current selection UI
+            if (_currentIndex >= 0)
+            {
+                PopulateUIForIndex(_currentIndex);
+            }
         }
 
         private static bool IsMonsterDirty(int index)
@@ -116,6 +126,7 @@ namespace YGO_CMC_Modding_tool.Pages
             MovementPattern.Source = new BitmapImage(movePatternImgUri);
             UpdateDirtyFlag(_currentIndex);
             UpdateHeaderRevertVisibility();
+            MonstersViewModel.NotifyChanged();
         }
 
         private void MonsterAttack_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -132,6 +143,7 @@ namespace YGO_CMC_Modding_tool.Pages
             AttackPattern.Source = new BitmapImage(attackPatternImgUri);
             UpdateDirtyFlag(_currentIndex);
             UpdateHeaderRevertVisibility();
+            MonstersViewModel.NotifyChanged();
         }
 
         private void OnMonsterFieldChanged(object sender, TextChangedEventArgs e)
@@ -157,6 +169,7 @@ namespace YGO_CMC_Modding_tool.Pages
             list[_currentIndex] = m;
             UpdateDirtyFlag(_currentIndex);
             UpdateHeaderRevertVisibility();
+            MonstersViewModel.NotifyChanged();
         }
 
         private void OnMonsterAttributeChanged(object sender, SelectionChangedEventArgs e)
@@ -171,6 +184,7 @@ namespace YGO_CMC_Modding_tool.Pages
             list[_currentIndex] = m;
             UpdateDirtyFlag(_currentIndex);
             UpdateHeaderRevertVisibility();
+            MonstersViewModel.NotifyChanged();
         }
 
         private void OnMonsterTypeChanged(object sender, SelectionChangedEventArgs e)
@@ -185,6 +199,7 @@ namespace YGO_CMC_Modding_tool.Pages
             list[_currentIndex] = m;
             UpdateDirtyFlag(_currentIndex);
             UpdateHeaderRevertVisibility();
+            MonstersViewModel.NotifyChanged();
         }
 
         // Revert header button handler for the currently selected monster
@@ -200,6 +215,7 @@ namespace YGO_CMC_Modding_tool.Pages
             PopulateUIForIndex(_currentIndex);
             UpdateDirtyFlag(_currentIndex);
             UpdateHeaderRevertVisibility();
+            MonstersViewModel.NotifyChanged();
         }
 
         // Patch All Monsters button click handler implementation

@@ -50,6 +50,10 @@ namespace YGO_CMC_Modding_tool.ViewModels
 
         public ObservableCollection<Monster> Monsters { get; } = new ObservableCollection<Monster>();
 
+        // Change notification event for UI grids
+        public static event Action MonstersChanged;
+        internal static void NotifyChanged() => MonstersChanged?.Invoke();
+
         public void Load(string isoPath, Services.MonsterRepository repository)
         {
             if (string.IsNullOrWhiteSpace(isoPath)) return;
@@ -65,6 +69,7 @@ namespace YGO_CMC_Modding_tool.ViewModels
             {
                 Monsters.Add(m);
             }
+            NotifyChanged();
         }
     }
 }
