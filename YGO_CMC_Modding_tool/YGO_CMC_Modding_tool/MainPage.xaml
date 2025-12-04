@@ -38,12 +38,17 @@
         <TabControl Grid.Row="1">
             <TabItem Header="Monsters">
                 <Frame>
-                    <pages:MonstersPage  Name="MonstersDataPage"/>
+                    <pages:MonstersPage Name="MonstersDataPage"/>
                 </Frame>
             </TabItem>
-            <TabItem Header="Monsters">
+            <TabItem Header="Monsters List">
                 <Frame>
                     <pages:MonstersListPage/>
+                </Frame>
+            </TabItem>
+            <TabItem Header="Opponents">
+                <Frame>
+					<pages:OpponentsPage  Name="OpponentsDataPage"/>
                 </Frame>
             </TabItem>
         </TabControl>

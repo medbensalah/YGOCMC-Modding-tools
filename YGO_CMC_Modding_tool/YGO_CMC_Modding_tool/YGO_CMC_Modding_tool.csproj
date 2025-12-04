@@ -10,8 +10,8 @@
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Maui" Version="13.0.0" />
     <PackageReference Include="FilePickers" Version="1.0.1" />
-    <PackageReference Include="OpenSilver" Version="3.2.2" />
-    <PackageReference Include="OpenSilver.Themes.Modern" Version="3.2.*" />
+    <PackageReference Include="OpenSilver" Version="3.3.0" />
+    <PackageReference Include="OpenSilver.Themes.Modern" Version="3.3.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,15 +27,22 @@
     <Page Include="Pages\MonstersPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\OpponentsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <ItemGroup>
     <Compile Include="App.xaml.cs" />
     <Compile Include="MainPage.xaml.cs" />
     <Compile Include="Pages\MonstersListPage.xaml.cs" />
+    <Compile Include="Pages\OpponentsViewModel.cs" />
+    <Compile Include="Pages\OpponentsListViewModel.cs" />
     <Compile Include="Pages\MonstersListViewModel.cs" />
     <Compile Include="Pages\MonstersPage.xaml.cs" />
     <Compile Include="Pages\MonstersViewModel.cs" />
+    <Compile Include="Pages\OpponentsPage.xaml.cs" />
+    <Compile Include="Services\OpponentRepository.cs" />
     <Compile Include="Services\MonsterRepository.cs" />
   </ItemGroup>
 

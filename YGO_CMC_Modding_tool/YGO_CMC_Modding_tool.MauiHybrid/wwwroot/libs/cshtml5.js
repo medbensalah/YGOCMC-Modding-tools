@@ -185,6 +185,7 @@ document.createImageManager = function (loadCallback, errorCallback) {
             element.style.lineHeight = '0px';
 
             const img = document._createElement('img', imgId, parent.windowid);
+            img.setAttribute('draggable', false);
             img.setAttribute('alt', ' ');
             img.style.display = 'none';
             img.style.width = 'inherit';
@@ -247,6 +248,7 @@ document.createShape = function (svgTagName, svgId, shapeId, defsId, parentId) {
 
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svg.classList.add('opensilver-uielement', 'opensilver-shape', 'uielement-unarranged');
+    document.inputManager.addListeners(svg, false);
     svg.setAttribute('id', svgId);
     Object.defineProperty(svg, 'xamlid', {
         value: svgId,
@@ -480,16 +482,17 @@ document.createInputManager = function (callback, pointerCallback) {
         POINTER_LEFT_UP: 2,
         POINTER_RIGHT_DOWN: 3,
         POINTER_RIGHT_UP: 4,
-        POINTER_ENTER: 5,
-        POINTER_LEAVE: 6,
-        WHEEL: 7,
-        KEYDOWN: 8,
-        KEYUP: 9,
-        KEYPRESS: 10,
-        FOCUS_MANAGED: 11,
-        FOCUS_UNMANAGED: 12,
-        WINDOW_FOCUS: 13,
-        WINDOW_BLUR: 14,
+        POINTER_MIDDLE_DOWN: 5,
+        POINTER_MIDDLE_UP: 6,
+        POINTER_ENTER: 7,
+        POINTER_LEAVE: 8,
+        WHEEL: 9,
+        KEYDOWN: 10,
+        KEYUP: 11,
+        KEYPRESS: 12,
+        FOCUS_UNMANAGED: 13,
+        WINDOW_FOCUS: 14,
+        WINDOW_BLUR: 15,
     };
 
     const MODIFIERKEYS = {
@@ -501,17 +504,7 @@ document.createInputManager = function (callback, pointerCallback) {
     };
 
     const FocusManager = (function () {
-        let _timeoutID = null;
         let _isManagedFocusUpdate = false;
-
-        function startTimer() {
-            if (_timeoutID === null) {
-                _timeoutID = setTimeout(function () {
-                    _timeoutID = null;
-                    callback('', EVENTS.FOCUS_MANAGED, null);
-                });
-            }
-        };
 
         return {
             get isManagingFocus() {
@@ -526,12 +519,7 @@ document.createInputManager = function (callback, pointerCallback) {
                 element.focus({ preventScroll: true });
                 _isManagedFocusUpdate = false;
 
-                if (document.activeElement === element) {
-                    startTimer();
-                    return true;
-                }
-
-                return false;
+                return document.activeElement === element;
             },
         };
     })();
@@ -599,6 +587,9 @@ document.createInputManager = function (callback, pointerCallback) {
                     case 0:
                         callback('', EVENTS.POINTER_LEFT_DOWN, e);
                         break;
+                    case 1:
+                        callback('', EVENTS.POINTER_MIDDLE_DOWN, e);
+                        break;
                     case 2:
                         callback('', EVENTS.POINTER_RIGHT_DOWN, e);
                         break;
@@ -612,6 +603,9 @@ document.createInputManager = function (callback, pointerCallback) {
                 switch (e.button) {
                     case 0:
                         invokePointerCallback(getClosestElement(target), EVENTS.POINTER_LEFT_UP, e);
+                        break;
+                    case 1:
+                        invokePointerCallback(getClosestElement(target), EVENTS.POINTER_MIDDLE_UP, e);
                         break;
                     case 2:
                         invokePointerCallback(getClosestElement(target), EVENTS.POINTER_RIGHT_UP, e);
@@ -712,6 +706,9 @@ document.createInputManager = function (callback, pointerCallback) {
                     case 0:
                         invokePointerCallback(element, EVENTS.POINTER_LEFT_DOWN, e);
                         break;
+                    case 1:
+                        invokePointerCallback(element, EVENTS.POINTER_MIDDLE_DOWN, e);
+                        break;
                     case 2:
                         invokePointerCallback(element, EVENTS.POINTER_RIGHT_DOWN, e);
                         break;
@@ -724,6 +721,9 @@ document.createInputManager = function (callback, pointerCallback) {
                 switch (e.button) {
                     case 0:
                         invokePointerCallback(getClosestElement(target), EVENTS.POINTER_LEFT_UP, e);
+                        break;
+                    case 1:
+                        invokePointerCallback(getClosestElement(target), EVENTS.POINTER_MIDDLE_UP, e);
                         break;
                     case 2:
                         invokePointerCallback(getClosestElement(target), EVENTS.POINTER_RIGHT_UP, e);
@@ -835,14 +835,26 @@ document.errorCallback = function (error, IndexOfNextUnmodifiedJSCallInList) {
     window.onCallBack.OnCallbackFromJavaScriptError(idWhereErrorCallbackArgsAreStored);
 };
 
-document.setVisible = function (id, visible) {
+document.setVisible = function (id) {
     const element = document.getElementById(id);
     if (element) {
-        if (visible) {
-            element.classList.remove('uielement-collapsed')
-        } else {
-            element.classList.add('uielement-collapsed')
-        }
+        element.classList.remove('uielement-collapsed', 'uielement-hidden');
+    }
+};
+
+document.setCollapsed = function (id) {
+    const element = document.getElementById(id);
+    if (element) {
+        element.classList.remove('uielement-hidden');
+        element.classList.add('uielement-collapsed');
+    }
+};
+
+document.setHidden = function (id) {
+    const element = document.getElementById(id);
+    if (element) {
+        element.classList.remove('uielement-collapsed');
+        element.classList.add('uielement-hidden');
     }
 };
 
@@ -1046,7 +1058,7 @@ document.getSystemColor = function (color) {
     return '';
 };
 
-document.createTextviewManager = function (inputCallback, scrollCallback) {
+document.createTextviewManager = function (inputCallback, scrollCallback, selectionChangeCallback) {
     if (document.textviewManager) return;
 
     function getSelectionLength(view) {
@@ -1160,16 +1172,26 @@ document.createTextviewManager = function (inputCallback, scrollCallback) {
                 scrollCallback(id);
             });
 
+            view.addEventListener('selectionchange', function (e) {
+                selectionChangeCallback(id);
+            });
+
             view.addEventListener('paste', function (e) {
                 if (this.getAttribute('data-acceptsreturn') === 'false') {
-                    e.preventDefault();
-                    let content = (e.originalEvent || e).clipboardData.getData('text/plain');
-                    if (content !== undefined) {
-                        content = content.replace(/\n/g, '').replace(/\r/g, '');
+                    const text = e.clipboardData.getData('text/plain');
+
+                    if (text.indexOf('\n') !== -1 || text.indexOf('\r') !== -1) {
+                        e.preventDefault();
+
+                        const newText = text.replace(/[\r\n]+/g, '');
+                        document.execCommand('insertText', false, newText);
+
+                        // Scroll to the cursor position
+                        this.blur();
+                        this.focus();
                     }
-                    document.execCommand('insertText', false, content);
                 }
-            }, false);
+            });
 
             parent.appendChild(view);
         },

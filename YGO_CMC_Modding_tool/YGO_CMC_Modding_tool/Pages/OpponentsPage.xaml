@@ -1,0 +1,197 @@
+﻿<Page
+    x:Class="YGO_CMC_Modding_tool.Pages.OpponentsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:vm="clr-namespace:YGO_CMC_Modding_tool.ViewModels"
+    xmlns:local="clr-namespace:YGO_CMC_Modding_tool.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+      Foreground="{DynamicResource Theme_TextBrush}"
+    Title="Opponents" d:DesignWidth="1360" d:DesignHeight="768">
+    <Page.Resources>
+        <local:MonsterIdToNameConverter x:Key="MonsterIdToNameConverter"/>
+
+        <Style x:Key="ComboItemStyle" TargetType="ComboBoxItem">
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="Height" Value="36"/>
+            <Setter Property="Margin" Value="4,2"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        <DataTemplate x:Key="ComboItemTemplate">
+            <TextBlock Text="{Binding}" FontSize="24" VerticalAlignment="Center"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="OpponentDisplayTemplate">
+            <TextBlock Text="{Binding}" FontSize="20" VerticalAlignment="Center"/>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid Background="{DynamicResource Theme_BackgroundBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Left sidebar: list + patch button -->
+        <Grid Grid.Column="0" Margin="8">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <ListBox Name="OpponentsListBox" Grid.Row="0"
+                     ItemTemplate="{StaticResource OpponentDisplayTemplate}"
+                     SelectionChanged="OnOpponentSelected"/>
+
+            <Button Grid.Row="1"
+                    Content="Patch All Opponents"
+                    Margin="0,8,0,0"
+                    Padding="8,6"
+                    HorizontalAlignment="Stretch"
+                    Click="OnPatchAllOpponentsClick"/>
+        </Grid>
+
+        <!-- Content area -->
+        <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto" Margin="6">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Background card -->
+                <Rectangle Grid.RowSpan="2" RadiusX="3" RadiusY="3">
+                    <Rectangle.Stroke>
+                        <SolidColorBrush Color="{DynamicResource Theme_BorderColor}" />
+                    </Rectangle.Stroke>
+                    <Rectangle.Fill>
+                        <SolidColorBrush Color="{DynamicResource Theme_ControlBackgroundColor}" />
+                    </Rectangle.Fill>
+                </Rectangle>
+
+                <!-- Name header with revert button aligned to the right -->
+                <Grid Grid.Row="0" Margin="16" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="OpponentName"
+                               Grid.Column="0"
+                               Text="Opponent"
+                               FontSize="48" FontWeight="Bold"
+                               HorizontalAlignment="Stretch"
+                               VerticalAlignment="Top"/>
+                    <Button x:Name="HeaderRevertButton"
+                            Grid.Column="1"
+                            Content="Revert"
+                            Margin="12,0,0,0"
+                            Padding="12,4"
+                            VerticalAlignment="Top"
+                            Visibility="Collapsed"
+                            Click="OnRevertCurrent"/>
+                </Grid>
+
+                <StackPanel Grid.Row="1" Margin="16">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Label FontSize="32" Grid.Row="0" Grid.Column="0" Content="Monster Cap:" VerticalAlignment="Center" Margin="8" />
+                        <TextBox FontSize="28" Name="OpponentMonsterCap" Grid.Row="0" Grid.Column="1" TextChanged="OnOpponentFieldChanged" TextAlignment="Center" Padding="-8" Margin="8" />
+
+                        <Label FontSize="32"  Grid.Row="1" Grid.Column="0" Content="Max AP:" VerticalAlignment="Center" Margin="8" />
+                        <TextBox FontSize="28" Name="OpponentMaxAP" Grid.Row="1" Grid.Column="1" TextChanged="OnOpponentFieldChanged" TextAlignment="Center" Padding="-8" Margin="8" />
+
+                        <Label FontSize="32"  Grid.Row="2" Grid.Column="0" Content="Max MP:" VerticalAlignment="Center" Margin="8" />
+                        <TextBox FontSize="28" Name="OpponentMaxMP" Grid.Row="2" Grid.Column="1" TextChanged="OnOpponentFieldChanged" TextAlignment="Center" Padding="-8" Margin="8" />
+
+                        <Label FontSize="32"  Grid.Row="3" Grid.Column="0" Content="Symbol DF:" VerticalAlignment="Center" Margin="8" />
+                        <TextBox FontSize="28" Name="OpponentSymbolDF" Grid.Row="3" Grid.Column="1" TextChanged="OnOpponentFieldChanged" TextAlignment="Center" Padding="-8" Margin="8" />
+
+                        <Label FontSize="32"  Grid.Row="4" Grid.Column="0" Content="Symbol PP:" VerticalAlignment="Center" Margin="8" />
+                        <TextBox FontSize="28" Name="OpponentSymbolPP" Grid.Row="4" Grid.Column="1" TextChanged="OnOpponentFieldChanged" TextAlignment="Center" Padding="-8" Margin="8" />
+
+                        <Label FontSize="32"  Grid.Row="5" Grid.Column="0" Content="Symbol Base AP:" VerticalAlignment="Center" Margin="8" />
+                        <TextBox FontSize="28" Name="OpponentSymbolBaseAP" Grid.Row="5" Grid.Column="1" TextChanged="OnOpponentFieldChanged" TextAlignment="Center" Padding="-8" Margin="8" />
+
+                        <Label FontSize="32"  Grid.Row="6" Grid.Column="0" Content="Symbol Attribute:" VerticalAlignment="Center" Margin="8" />
+                        <TextBox FontSize="28" Name="OpponentSymbolAttribute" Grid.Row="6" Grid.Column="1" TextChanged="OnOpponentFieldChanged" TextAlignment="Center" Padding="-8" Margin="8" />
+
+                        <Label FontSize="32"  Grid.Row="7" Grid.Column="0" Content="Symbol Effect:" VerticalAlignment="Center" Margin="8" />
+                        <TextBox FontSize="28" Name="OpponentSymbolEffect" Grid.Row="7" Grid.Column="1" TextChanged="OnOpponentFieldChanged" TextAlignment="Center" Padding="-8" Margin="8" />
+                    </Grid>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="16"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Red Monsters" FontSize="32" FontWeight="Bold" Margin="0,20,0,10"/>
+                        <DataGrid Grid.Row="1" Grid.Column="0" Name="RedsGrid" AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn Header="ID" Width="*">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding IDRed, Converter={StaticResource MonsterIdToNameConverter}}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                    <DataGridTemplateColumn.CellEditingTemplate>
+                                        <DataTemplate>
+                                            <ComboBox
+                                            ItemsSource="{x:Static vm:OpponentsViewModel.MonsterList}"
+                                            DisplayMemberPath="Name"
+                                            SelectedValuePath="Id"
+                                            SelectedValue="{Binding IDRed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellEditingTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Header="Level" Binding="{Binding LevelRed}" Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                        <TextBlock Grid.Row="0" Grid.Column="2" Text="Blue Monsters" FontSize="32" FontWeight="Bold" Margin="0,20,0,10"/>
+                        <DataGrid Grid.Row="1" Grid.Column="2" Name="BluesGrid" AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn Header="ID" Width="*">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding IDBlue, Converter={StaticResource MonsterIdToNameConverter}}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                    <DataGridTemplateColumn.CellEditingTemplate>
+                                        <DataTemplate>
+                                            <ComboBox
+                                            ItemsSource="{x:Static vm:OpponentsViewModel.MonsterList}"
+                                            DisplayMemberPath="Name"
+                                            SelectedValuePath="Id"
+                                            SelectedValue="{Binding IDBlue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellEditingTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Header="Level" Binding="{Binding LevelBlue}" Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</Page>

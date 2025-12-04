@@ -21,7 +21,9 @@ namespace YGO_CMC_Modding_tool
     public partial class MainPage : Page
     {
         private readonly MonsterRepository _monsterRepo = new MonsterRepository();
+        private readonly OpponentRepository _opponentRepo = new OpponentRepository();
         private readonly MonstersViewModel _monstersVm = new MonstersViewModel();
+        private readonly OpponentsViewModel _opponentsVm = new OpponentsViewModel();
 
         public String SourceIsoPath
         {
@@ -79,7 +81,9 @@ namespace YGO_CMC_Modding_tool
                 {
                     SourceIsoPathTextBox.Text = result.FullPath;
                     _monstersVm.Load(result.FullPath, _monsterRepo);
+                    _opponentsVm.Load(result.FullPath, _opponentRepo);
                     MonstersDataPage.SelectFirstMonster();
+                    OpponentsDataPage.SelectFirstOpponent();
                 }
             }
 
