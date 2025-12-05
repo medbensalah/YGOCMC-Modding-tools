@@ -43,12 +43,22 @@
             </TabItem>
             <TabItem Header="Monsters List">
                 <Frame>
-                    <pages:MonstersListPage/>
+                    <pages:MonstersListPage Name="MonstersDataGridPage"/>
                 </Frame>
             </TabItem>
             <TabItem Header="Opponents">
                 <Frame>
 					<pages:OpponentsPage  Name="OpponentsDataPage"/>
+                </Frame>
+            </TabItem>
+            <TabItem Header="Starter Kits">
+                <Frame>
+                    <pages:StarterKitsPage  Name="StarterKitsPage"/>
+                </Frame>
+            </TabItem>
+            <TabItem Header="Shops">
+                <Frame>
+                    <pages:ShopsPage  Name="ShopsPage"/>
                 </Frame>
             </TabItem>
         </TabControl>

@@ -25,7 +25,7 @@ namespace YGO_CMC_Modding_tool.ViewModels
                 }
             }
 
-            public string Display => string.Format("{0:D3} {1}{2}", BaseName, IsDirty ? " *" : "");
+            public string Display => BaseName + (IsDirty ? " *" : "");
             public OpponentDisplayItem(string name)
             {
                 BaseName = name;
@@ -43,20 +43,20 @@ namespace YGO_CMC_Modding_tool.ViewModels
             "Pegasus 2", "Ishizu 2", "Yami Marik 2", "Shadi 2", "kaiba 2"
         };
 
-        public static ObservableCollection<OpponentDisplayItem> MonsterDisplayNames { get; } = new ObservableCollection<OpponentDisplayItem>();
+        public static ObservableCollection<OpponentDisplayItem> OpponentDisplayNames { get; } = new ObservableCollection<OpponentDisplayItem>();
 
         static OpponentsListViewModel()
         {
             for (int i = 0; i < OpponentNames.Count; i++)
             {
-                MonsterDisplayNames.Add(new OpponentDisplayItem(OpponentNames[i]));
+                OpponentDisplayNames.Add(new OpponentDisplayItem(OpponentNames[i]));
             }
         }
 
         public static void SetDirtyFlag(int index, bool dirty)
         {
-            if (index < 0 || index >= MonsterDisplayNames.Count) return;
-            MonsterDisplayNames[index].IsDirty = dirty;
+            if (index < 0 || index >= OpponentNames.Count) return;
+            OpponentDisplayNames[index].IsDirty = dirty;
         }
 
         public static IEnumerable<string> AttributeKeys => MonstersListViewModel.AttributeKeys;

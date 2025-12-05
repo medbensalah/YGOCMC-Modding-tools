@@ -15,6 +15,7 @@ using YGO_CMC_Modding_tool.ViewModels;
 using Microsoft.Maui.Devices;
 using System.Collections.Generic; // added for DevicePlatform
 using YGO_CMC_Modding_tool.Pages;
+using Microsoft.Maui.Controls.Xaml;
 
 namespace YGO_CMC_Modding_tool
 {
@@ -22,8 +23,13 @@ namespace YGO_CMC_Modding_tool
     {
         private readonly MonsterRepository _monsterRepo = new MonsterRepository();
         private readonly OpponentRepository _opponentRepo = new OpponentRepository();
+        private readonly StarterKitsRepository _starterkitRepo = new StarterKitsRepository();
+        private readonly ShopsRepoitory _shopsRepo = new ShopsRepoitory();
+
         private readonly MonstersViewModel _monstersVm = new MonstersViewModel();
         private readonly OpponentsViewModel _opponentsVm = new OpponentsViewModel();
+        private readonly StarterKitsViewModel _starterKitsVm = new StarterKitsViewModel();
+        private readonly ShopsViewModel _shopsVm = new ShopsViewModel();
 
         public String SourceIsoPath
         {
@@ -82,8 +88,20 @@ namespace YGO_CMC_Modding_tool
                     SourceIsoPathTextBox.Text = result.FullPath;
                     _monstersVm.Load(result.FullPath, _monsterRepo);
                     _opponentsVm.Load(result.FullPath, _opponentRepo);
+                    _starterKitsVm.Load(result.FullPath, _starterkitRepo);
+                    _shopsVm.Load(result.FullPath, _shopsRepo);
+
+                    MonstersDataPage.RefreshCurrentMonsterDisplay();
                     MonstersDataPage.SelectFirstMonster();
+
+                    MonstersDataGridPage.RefreshMonstersGrid();
+
+                    OpponentsDataPage.RefreshCurrentOpponentDisplay();
                     OpponentsDataPage.SelectFirstOpponent();
+
+                    StarterKitsPage.RefreshCurrentStarterKitDisplay();
+                    ShopsPage.RefreshShopsDisplay(); // Add this line
+
                 }
             }
 

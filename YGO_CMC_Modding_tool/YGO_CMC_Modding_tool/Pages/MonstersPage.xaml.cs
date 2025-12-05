@@ -68,7 +68,7 @@ namespace YGO_CMC_Modding_tool.Pages
             }
         }
 
-        private void RefreshCurrentMonsterDisplay()
+        public void RefreshCurrentMonsterDisplay()
         {
             if (_currentIndex < 0) return;
 
@@ -148,7 +148,7 @@ namespace YGO_CMC_Modding_tool.Pages
             MonsterMovement.SelectedItem = MonstersListViewModel._patternMap.Where(kv => kv.Value == m.MovementPattern).First().Key;
             MonsterAttack.SelectedItem = MonstersListViewModel._patternMap.Where(kv => kv.Value == m.AttackPattern).First().Key;
 
-            var fileName = baseName.Replace(" ", "_").Replace("#", "");
+            var fileName = baseName.Replace(" ", "_").Replace("#", "").Replace(",", "");
             var monsterImgUri = new Uri($"/YGO_CMC_Modding_tool;component/Resources/Monsters/{fileName}.jpg", UriKind.Relative);
             MonsterImg.Source = new BitmapImage(monsterImgUri);
         }

@@ -186,6 +186,19 @@ namespace YGO_CMC_Modding_tool.Pages
             }
         }
 
+        public void RefreshMonstersGrid()
+        {
+            if (MonstersViewModel.LastLoaded != null)
+            {
+                var gridItems = MonstersViewModel.LastLoaded.Select((monster, index) => new MonsterGridItem(
+                    index,
+                    MonstersListViewModel.MonsterNames[index],
+                    monster
+                )).ToList();
+                MonstersGrid.ItemsSource = gridItems;
+            }
+        }
+
         private void TypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (sender is ComboBox comboBox && comboBox.DataContext is MonsterGridItem item)

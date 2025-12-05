@@ -23,7 +23,6 @@ namespace YGO_CMC_Modding_tool.Pages
         {
             InitializeComponent();
             DataContext = this;
-            // Example ISO Path, you should set this from your main window or configuration
             IsVisibleChanged += OpponentsPage_IsVisibleChanged;
         }
 
@@ -39,15 +38,18 @@ namespace YGO_CMC_Modding_tool.Pages
         {
             if ((bool)e.NewValue) // If page is becoming visible
             {
-                if (OpponentsListBox.ItemsSource == null && OpponentsViewModel.LastLoaded != null)
+                // Bind directly to the observable OpponentDisplayNames so asterisk reflects dirty state.
+                if (OpponentsListBox.ItemsSource == null && OpponentsListViewModel.OpponentDisplayNames != null)
                 {
-                    OpponentsListBox.ItemsSource = OpponentsViewModel.LastLoaded.Select(o => o.Name).ToList();
+                    OpponentsListBox.ItemsSource = OpponentsListViewModel.OpponentDisplayNames;
                 }
+
                 if (_currentIndex < 0)
                 {
                     SelectFirstMonster();
                 }
-                    RefreshCurrentOpponentDisplay();
+
+                RefreshCurrentOpponentDisplay();
             }
         }
 
@@ -59,11 +61,19 @@ namespace YGO_CMC_Modding_tool.Pages
             }
         }
 
-        private void RefreshCurrentOpponentDisplay()
+        public void RefreshCurrentOpponentDisplay()
         {
             if (_currentIndex < 0) return;
             PopulateUIForIndex(_currentIndex);
+            UpdateDirtyFlag(_currentIndex);
             UpdateHeaderRevertVisibility();
+        }
+
+        private static void UpdateDirtyFlag(int index)
+        {
+            if (index < 0) return;
+            var dirty = IsOpponentDirty(index);
+            OpponentsListViewModel.SetDirtyFlag(index, dirty);
         }
 
         private static bool IsOpponentDirty(int index)
@@ -126,6 +136,7 @@ namespace YGO_CMC_Modding_tool.Pages
             if (list == null || _currentIndex >= list.Count) { UpdateHeaderRevertVisibility(); return; }
 
             PopulateUIForIndex(_currentIndex);
+            UpdateDirtyFlag(_currentIndex);
             UpdateHeaderRevertVisibility();
         }
 
@@ -148,14 +159,16 @@ namespace YGO_CMC_Modding_tool.Pages
             else if (sender == OpponentSymbolAttribute) o.SymbolAttribute = ParseByte(OpponentSymbolAttribute);
             else if (sender == OpponentSymbolEffect) o.SymbolEffect = ParseByte(OpponentSymbolEffect);
 
+            UpdateDirtyFlag(_currentIndex);
             UpdateHeaderRevertVisibility();
         }
 
         private void OnGridCellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
-            // Use the dispatcher to delay the visibility update,
-            // ensuring the binding has time to update the source.
-            Dispatcher.BeginInvoke(new Action(() => UpdateHeaderRevertVisibility()), System.Windows.Threading.DispatcherPriority.Background);
+            Dispatcher.BeginInvoke(new Action(() => {
+                UpdateDirtyFlag(_currentIndex);
+                UpdateHeaderRevertVisibility();
+            }), System.Windows.Threading.DispatcherPriority.Background);
         }
 
         private void OnRevertCurrent(object sender, RoutedEventArgs e)
@@ -167,6 +180,7 @@ namespace YGO_CMC_Modding_tool.Pages
             if (_currentIndex >= orig.Count || _currentIndex >= cur.Count) return;
             cur[_currentIndex] = orig[_currentIndex].Clone();
             PopulateUIForIndex(_currentIndex);
+            UpdateDirtyFlag(_currentIndex);
             UpdateHeaderRevertVisibility();
         }
 

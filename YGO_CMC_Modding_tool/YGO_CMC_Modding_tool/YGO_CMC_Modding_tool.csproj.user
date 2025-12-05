@@ -5,9 +5,21 @@
     <Compile Update="Pages\OpponentsPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Pages\ShopsPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\StarterKitsPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Pages\OpponentsPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\ShopsPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\StarterKitsPage.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

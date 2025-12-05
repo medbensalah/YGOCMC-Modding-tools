@@ -22,9 +22,9 @@
             <TextBlock Text="{Binding}" FontSize="24" VerticalAlignment="Center"/>
         </DataTemplate>
 
-        <DataTemplate x:Key="OpponentDisplayTemplate">
+        <!--<DataTemplate x:Key="OpponentDisplayTemplate">
             <TextBlock Text="{Binding}" FontSize="20" VerticalAlignment="Center"/>
-        </DataTemplate>
+        </DataTemplate>-->
     </Page.Resources>
 
     <Grid Background="{DynamicResource Theme_BackgroundBrush}">
@@ -40,8 +40,11 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <ListBox Name="OpponentsListBox" Grid.Row="0"
-                     ItemTemplate="{StaticResource OpponentDisplayTemplate}"
+            <!-- Bind to the observable display items so the '*' reflects dirty state -->
+            <ListBox Name="OpponentsListBox"
+                     Grid.Row="0"
+                     ItemsSource="{x:Static vm:OpponentsListViewModel.OpponentDisplayNames}"
+                     DisplayMemberPath="Display"
                      SelectionChanged="OnOpponentSelected"/>
 
             <Button Grid.Row="1"

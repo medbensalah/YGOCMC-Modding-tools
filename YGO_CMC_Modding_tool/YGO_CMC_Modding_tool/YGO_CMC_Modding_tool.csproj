@@ -30,18 +30,31 @@
     <Page Include="Pages\OpponentsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\ShopsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\StarterKitsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <ItemGroup>
     <Compile Include="App.xaml.cs" />
     <Compile Include="MainPage.xaml.cs" />
     <Compile Include="Pages\MonstersListPage.xaml.cs" />
+    <Compile Include="Pages\ShopsPage.xaml.cs" />
+    <Compile Include="Pages\StarterKitstListViewModel.cs" />
     <Compile Include="Pages\OpponentsViewModel.cs" />
     <Compile Include="Pages\OpponentsListViewModel.cs" />
     <Compile Include="Pages\MonstersListViewModel.cs" />
     <Compile Include="Pages\MonstersPage.xaml.cs" />
     <Compile Include="Pages\MonstersViewModel.cs" />
     <Compile Include="Pages\OpponentsPage.xaml.cs" />
+    <Compile Include="Pages\StarterKitsPage.xaml.cs" />
+    <Compile Include="Pages\ShopsViewModel.cs" />
+    <Compile Include="Pages\StarterKitsViewModel.cs" />
+    <Compile Include="Services\ShopsRepoitory.cs" />
+    <Compile Include="Services\StarterKitsRepository.cs" />
     <Compile Include="Services\OpponentRepository.cs" />
     <Compile Include="Services\MonsterRepository.cs" />
   </ItemGroup>
@@ -359,8 +372,8 @@
     <Resource Include="Resources\Monsters\Whiptail_Crow.jpg" />
     <Resource Include="Resources\Monsters\White_Dolphin.jpg" />
     <Resource Include="Resources\Monsters\Wicked_Dragon_with_the_Ersatz_Head.jpg" />
-    <Resource Include="Resources\Monsters\Winged_Dragon,_Guardian_of_the_Fortress_1.jpg" />
-    <Resource Include="Resources\Monsters\Winged_Dragon,_Guardian_of_the_Fortress_2.jpg" />
+    <Resource Include="Resources\Monsters\Winged_Dragon_Guardian_of_the_Fortress_1.jpg" />
+    <Resource Include="Resources\Monsters\Winged_Dragon_Guardian_of_the_Fortress_2.jpg" />
     <Resource Include="Resources\Monsters\Wing_Egg_Elf.jpg" />
     <Resource Include="Resources\Monsters\Yado_Karu.jpg" />
     <Resource Include="Resources\Monsters\Yamadron.jpg" />
