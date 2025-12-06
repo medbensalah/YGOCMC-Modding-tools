@@ -2,6 +2,15 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
+    <Compile Update="Controls\BuffCellControlViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\AttributeBuffsPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\BuffCellControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Pages\OpponentsPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -13,6 +22,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Pages\AttributeBuffsPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\BuffCellControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Pages\OpponentsPage.xaml">
       <SubType>Designer</SubType>
     </Page>

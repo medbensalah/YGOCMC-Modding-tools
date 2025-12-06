@@ -61,6 +61,11 @@
                     <pages:ShopsPage  Name="ShopsPage"/>
                 </Frame>
             </TabItem>
+            <TabItem Header="Attribute Buffs">
+                <Frame>
+                    <pages:AttributeBuffsPage  Name="AttributeBuffsPage"/>
+                </Frame>
+            </TabItem>
         </TabControl>
     </Grid>
 </Page>

@@ -21,6 +21,12 @@
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\AttributeBuffsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\BuffCellControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\MonstersListPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -40,9 +46,14 @@
 
   <ItemGroup>
     <Compile Include="App.xaml.cs" />
+    <Compile Include="Controls\BuffCellControlViewModel.cs" />
+    <Compile Include="Converters\BuffDirectionToImageConverter.cs" />
     <Compile Include="MainPage.xaml.cs" />
+    <Compile Include="Pages\AttributeBuffsPage.xaml.cs" />
+    <Compile Include="Controls\BuffCellControl.xaml.cs" />
     <Compile Include="Pages\MonstersListPage.xaml.cs" />
     <Compile Include="Pages\ShopsPage.xaml.cs" />
+    <Compile Include="Pages\AttributeBuffsViewModel.cs" />
     <Compile Include="Pages\StarterKitstListViewModel.cs" />
     <Compile Include="Pages\OpponentsViewModel.cs" />
     <Compile Include="Pages\OpponentsListViewModel.cs" />
@@ -54,9 +65,16 @@
     <Compile Include="Pages\ShopsViewModel.cs" />
     <Compile Include="Pages\StarterKitsViewModel.cs" />
     <Compile Include="Services\ShopsRepoitory.cs" />
+    <Compile Include="Services\AttributeBuffsRepository.cs" />
     <Compile Include="Services\StarterKitsRepository.cs" />
     <Compile Include="Services\OpponentRepository.cs" />
     <Compile Include="Services\MonsterRepository.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Arrows\DownArrow.png" />
+    <Resource Include="Resources\Arrows\None.png" />
+    <Resource Include="Resources\Arrows\UpArrow.png" />
   </ItemGroup>
 
   <ItemGroup>

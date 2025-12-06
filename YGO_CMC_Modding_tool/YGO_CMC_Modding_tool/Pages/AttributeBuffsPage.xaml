@@ -1,0 +1,179 @@
+﻿<Page
+    x:Class="YGO_CMC_Modding_tool.Pages.AttributeBuffsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Foreground="{DynamicResource Theme_TextBrush}"
+    xmlns:local="clr-namespace:YGO_CMC_Modding_tool.Pages"
+    xmlns:controls="clr-namespace:YGO_CMC_Modding_tool.Controls" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" d:DesignWidth="1360" d:DesignHeight="768" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d">
+
+    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" HorizontalAlignment="Stretch" Margin="0">
+
+        <Grid Margin="8">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Background card -->
+            <Rectangle Grid.RowSpan="3" RadiusX="3" RadiusY="3">
+                <Rectangle.Stroke>
+                    <SolidColorBrush Color="{DynamicResource Theme_BorderColor}" />
+                </Rectangle.Stroke>
+                <Rectangle.Fill>
+                    <SolidColorBrush Color="{DynamicResource Theme_ControlBackgroundColor}" />
+                </Rectangle.Fill>
+            </Rectangle>
+
+            <TextBlock Grid.Column="0" Text="Attribute Buffs" FontSize="24" FontWeight="Bold" Margin="8"/>
+            <Button Grid.Column="0" Content="Patch" Margin="8" Padding="8,6" HorizontalAlignment="Right" Click="OnPatchClick"/>
+
+            <Grid x:Name="BuffsGrid" Grid.Row="2" Margin="8">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- New Headers -->
+                <TextBlock Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="8" Text="Monsters" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="4"/>
+                <TextBlock Grid.Row="2" Grid.Column="0" Grid.RowSpan="8" Text="Symbols" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="4">
+                    <TextBlock.RenderTransform>
+                        <RotateTransform Angle="-90"/>
+                    </TextBlock.RenderTransform>
+                </TextBlock>
+
+                <!-- Column Headers -->
+                <TextBlock Grid.Row="1" Grid.Column="2" Text="Light" FontWeight="Bold" HorizontalAlignment="Center" Margin="4"/>
+                <TextBlock Grid.Row="1" Grid.Column="3" Text="Dark" FontWeight="Bold" HorizontalAlignment="Center" Margin="4"/>
+                <TextBlock Grid.Row="1" Grid.Column="4" Text="Fire" FontWeight="Bold" HorizontalAlignment="Center" Margin="4"/>
+                <TextBlock Grid.Row="1" Grid.Column="5" Text="Water" FontWeight="Bold" HorizontalAlignment="Center" Margin="4"/>
+                <TextBlock Grid.Row="1" Grid.Column="6" Text="Earth" FontWeight="Bold" HorizontalAlignment="Center" Margin="4"/>
+                <TextBlock Grid.Row="1" Grid.Column="7" Text="Wind" FontWeight="Bold" HorizontalAlignment="Center" Margin="4"/>
+                <TextBlock Grid.Row="1" Grid.Column="8" Text="Wood" FontWeight="Bold" HorizontalAlignment="Center" Margin="4"/>
+                <TextBlock Grid.Row="1" Grid.Column="9" Text="Thunder" FontWeight="Bold" HorizontalAlignment="Center" Margin="4"/>
+
+                <!-- Row Headers -->
+                <TextBlock Grid.Row="2" Grid.Column="1" Text="Light" FontWeight="Bold" VerticalAlignment="Center" Margin="4"/>
+                <TextBlock Grid.Row="3" Grid.Column="1" Text="Dark" FontWeight="Bold" VerticalAlignment="Center" Margin="4"/>
+                <TextBlock Grid.Row="4" Grid.Column="1" Text="Fire" FontWeight="Bold" VerticalAlignment="Center" Margin="4"/>
+                <TextBlock Grid.Row="5" Grid.Column="1" Text="Water" FontWeight="Bold" VerticalAlignment="Center" Margin="4"/>
+                <TextBlock Grid.Row="6" Grid.Column="1" Text="Earth" FontWeight="Bold" VerticalAlignment="Center" Margin="4"/>
+                <TextBlock Grid.Row="7" Grid.Column="1" Text="Wind" FontWeight="Bold" VerticalAlignment="Center" Margin="4"/>
+                <TextBlock Grid.Row="8" Grid.Column="1" Text="Wood" FontWeight="Bold" VerticalAlignment="Center" Margin="4"/>
+                <TextBlock Grid.Row="9" Grid.Column="1" Text="Thunder" FontWeight="Bold" VerticalAlignment="Center" Margin="4"/>
+
+                <!-- 8x8 Grid Content Area -->
+                <controls:BuffCellControl x:Name="LightToLight" Grid.Row="2" Grid.Column="2" />
+                <controls:BuffCellControl x:Name="LightToDark" Grid.Row="2" Grid.Column="3" />
+                <controls:BuffCellControl x:Name="LightToFire" Grid.Row="2" Grid.Column="4" />
+                <controls:BuffCellControl x:Name="LightToWater" Grid.Row="2" Grid.Column="5" />
+                <controls:BuffCellControl x:Name="LightToEarth" Grid.Row="2" Grid.Column="6" />
+                <controls:BuffCellControl x:Name="LightToWind" Grid.Row="2" Grid.Column="7" />
+                <controls:BuffCellControl x:Name="LightToWood" Grid.Row="2" Grid.Column="8" />
+                <controls:BuffCellControl x:Name="LightToThunder" Grid.Row="2" Grid.Column="9" />
+                <controls:BuffCellControl x:Name="DarkToLight" Grid.Row="3" Grid.Column="2" />
+                <controls:BuffCellControl x:Name="DarkToDark" Grid.Row="3" Grid.Column="3" />
+                <controls:BuffCellControl x:Name="DarkToFire" Grid.Row="3" Grid.Column="4" />
+                <controls:BuffCellControl x:Name="DarkToWater" Grid.Row="3" Grid.Column="5" />
+                <controls:BuffCellControl x:Name="DarkToEarth" Grid.Row="3" Grid.Column="6" />
+                <controls:BuffCellControl x:Name="DarkToWind" Grid.Row="3" Grid.Column="7" />
+                <controls:BuffCellControl x:Name="DarkToWood" Grid.Row="3" Grid.Column="8" />
+                <controls:BuffCellControl x:Name="DarkToThunder" Grid.Row="3" Grid.Column="9" />
+                <controls:BuffCellControl x:Name="FireToLight" Grid.Row="4" Grid.Column="2" />
+                <controls:BuffCellControl x:Name="FireToDark" Grid.Row="4" Grid.Column="3" />
+                <controls:BuffCellControl x:Name="FireToFire" Grid.Row="4" Grid.Column="4" />
+                <controls:BuffCellControl x:Name="FireToWater" Grid.Row="4" Grid.Column="5" />
+                <controls:BuffCellControl x:Name="FireToEarth" Grid.Row="4" Grid.Column="6" />
+                <controls:BuffCellControl x:Name="FireToWind" Grid.Row="4" Grid.Column="7" />
+                <controls:BuffCellControl x:Name="FireToWood" Grid.Row="4" Grid.Column="8" />
+                <controls:BuffCellControl x:Name="FireToThunder" Grid.Row="4" Grid.Column="9" />
+                <controls:BuffCellControl x:Name="WaterToLight" Grid.Row="5" Grid.Column="2" />
+                <controls:BuffCellControl x:Name="WaterToDark" Grid.Row="5" Grid.Column="3" />
+                <controls:BuffCellControl x:Name="WaterToFire" Grid.Row="5" Grid.Column="4" />
+                <controls:BuffCellControl x:Name="WaterToWater" Grid.Row="5" Grid.Column="5" />
+                <controls:BuffCellControl x:Name="WaterToEarth" Grid.Row="5" Grid.Column="6" />
+                <controls:BuffCellControl x:Name="WaterToWind" Grid.Row="5" Grid.Column="7" />
+                <controls:BuffCellControl x:Name="WaterToWood" Grid.Row="5" Grid.Column="8" />
+                <controls:BuffCellControl x:Name="WaterToThunder" Grid.Row="5" Grid.Column="9" />
+                <controls:BuffCellControl x:Name="EarthToLight" Grid.Row="6" Grid.Column="2" />
+                <controls:BuffCellControl x:Name="EarthToDark" Grid.Row="6" Grid.Column="3" />
+                <controls:BuffCellControl x:Name="EarthToFire" Grid.Row="6" Grid.Column="4" />
+                <controls:BuffCellControl x:Name="EarthToWater" Grid.Row="6" Grid.Column="5" />
+                <controls:BuffCellControl x:Name="EarthToEarth" Grid.Row="6" Grid.Column="6" />
+                <controls:BuffCellControl x:Name="EarthToWind" Grid.Row="6" Grid.Column="7" />
+                <controls:BuffCellControl x:Name="EarthToWood" Grid.Row="6" Grid.Column="8" />
+                <controls:BuffCellControl x:Name="EarthToThunder" Grid.Row="6" Grid.Column="9" />
+                <controls:BuffCellControl x:Name="WindToLight" Grid.Row="7" Grid.Column="2" />
+                <controls:BuffCellControl x:Name="WindToDark" Grid.Row="7" Grid.Column="3" />
+                <controls:BuffCellControl x:Name="WindToFire" Grid.Row="7" Grid.Column="4" />
+                <controls:BuffCellControl x:Name="WindToWater" Grid.Row="7" Grid.Column="5" />
+                <controls:BuffCellControl x:Name="WindToEarth" Grid.Row="7" Grid.Column="6" />
+                <controls:BuffCellControl x:Name="WindToWind" Grid.Row="7" Grid.Column="7" />
+                <controls:BuffCellControl x:Name="WindToWood" Grid.Row="7" Grid.Column="8" />
+                <controls:BuffCellControl x:Name="WindToThunder" Grid.Row="7" Grid.Column="9" />
+                <controls:BuffCellControl x:Name="WoodToLight" Grid.Row="8" Grid.Column="2" />
+                <controls:BuffCellControl x:Name="WoodToDark" Grid.Row="8" Grid.Column="3" />
+                <controls:BuffCellControl x:Name="WoodToFire" Grid.Row="8" Grid.Column="4" />
+                <controls:BuffCellControl x:Name="WoodToWater" Grid.Row="8" Grid.Column="5" />
+                <controls:BuffCellControl x:Name="WoodToEarth" Grid.Row="8" Grid.Column="6" />
+                <controls:BuffCellControl x:Name="WoodToWind" Grid.Row="8" Grid.Column="7" />
+                <controls:BuffCellControl x:Name="WoodToWood" Grid.Row="8" Grid.Column="8" />
+                <controls:BuffCellControl x:Name="WoodToThunder" Grid.Row="8" Grid.Column="9" />
+                <controls:BuffCellControl x:Name="ThunderToLight" Grid.Row="9" Grid.Column="2" />
+                <controls:BuffCellControl x:Name="ThunderToDark" Grid.Row="9" Grid.Column="3" />
+                <controls:BuffCellControl x:Name="ThunderToFire" Grid.Row="9" Grid.Column="4" />
+                <controls:BuffCellControl x:Name="ThunderToWater" Grid.Row="9" Grid.Column="5" />
+                <controls:BuffCellControl x:Name="ThunderToEarth" Grid.Row="9" Grid.Column="6" />
+                <controls:BuffCellControl x:Name="ThunderToWind" Grid.Row="9" Grid.Column="7" />
+                <controls:BuffCellControl x:Name="ThunderToWood" Grid.Row="9" Grid.Column="8" />
+                <controls:BuffCellControl x:Name="ThunderToThunder" Grid.Row="9" Grid.Column="9" />
+
+                <!-- Grid Lines -->
+                <Rectangle Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="8" Height="1" VerticalAlignment="Top" Fill="{DynamicResource Theme_BorderBrush}"/>
+                <Rectangle Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="8" Height="1" VerticalAlignment="Bottom" Fill="{DynamicResource Theme_BorderBrush}"/>
+                <Rectangle Grid.Row="1"  Grid.ColumnSpan="10" Height="1" VerticalAlignment="Bottom" Fill="{DynamicResource Theme_BorderBrush}"/>
+                <Rectangle Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="10" Height="1" VerticalAlignment="Bottom" Fill="{DynamicResource Theme_BorderBrush}"/>
+                <Rectangle Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="10" Height="1" VerticalAlignment="Bottom" Fill="{DynamicResource Theme_BorderBrush}"/>
+                <Rectangle Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="10" Height="1" VerticalAlignment="Bottom" Fill="{DynamicResource Theme_BorderBrush}"/>
+                <Rectangle Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="10" Height="1" VerticalAlignment="Bottom" Fill="{DynamicResource Theme_BorderBrush}"/>
+                <Rectangle Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="10" Height="1" VerticalAlignment="Bottom" Fill="{DynamicResource Theme_BorderBrush}"/>
+                <Rectangle Grid.Row="7" Grid.Column="2" Grid.ColumnSpan="10" Height="1" VerticalAlignment="Bottom" Fill="{DynamicResource Theme_BorderBrush}"/>
+                <Rectangle Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="10" Height="1" VerticalAlignment="Bottom" Fill="{DynamicResource Theme_BorderBrush}"/>
+                <Rectangle Grid.Row="9" Grid.ColumnSpan="10" Height="1" VerticalAlignment="Bottom" Fill="{DynamicResource Theme_BorderBrush}"/>
+
+                <Rectangle Grid.Column="0" Grid.Row="2" Grid.RowSpan="8" Width="1" HorizontalAlignment="Left" Fill="{DynamicResource Theme_BorderBrush}"/>
+                <Rectangle Grid.Column="0" Grid.Row="2" Grid.RowSpan="8" Width="1" HorizontalAlignment="Right" Fill="{DynamicResource Theme_BorderBrush}"/>
+                <Rectangle Grid.Column="1" Grid.RowSpan="10" Width="1" HorizontalAlignment="Right" Fill="{DynamicResource Theme_BorderBrush}"/>
+                <Rectangle Grid.Column="2" Grid.Row="1" Grid.RowSpan="10" Width="1" HorizontalAlignment="Right" Fill="{DynamicResource Theme_BorderBrush}"/>
+                <Rectangle Grid.Column="3" Grid.Row="1" Grid.RowSpan="10" Width="1" HorizontalAlignment="Right" Fill="{DynamicResource Theme_BorderBrush}"/>
+                <Rectangle Grid.Column="4" Grid.Row="1" Grid.RowSpan="10" Width="1" HorizontalAlignment="Right" Fill="{DynamicResource Theme_BorderBrush}"/>
+                <Rectangle Grid.Column="5" Grid.Row="1" Grid.RowSpan="10" Width="1" HorizontalAlignment="Right" Fill="{DynamicResource Theme_BorderBrush}"/>
+                <Rectangle Grid.Column="6" Grid.Row="1" Grid.RowSpan="10" Width="1" HorizontalAlignment="Right" Fill="{DynamicResource Theme_BorderBrush}"/>
+                <Rectangle Grid.Column="7" Grid.Row="1" Grid.RowSpan="10" Width="1" HorizontalAlignment="Right" Fill="{DynamicResource Theme_BorderBrush}"/>
+                <Rectangle Grid.Column="8" Grid.Row="1" Grid.RowSpan="10" Width="1" HorizontalAlignment="Right" Fill="{DynamicResource Theme_BorderBrush}"/>
+                <Rectangle Grid.Column="9" Grid.Row="1" Grid.RowSpan="10" Width="1" HorizontalAlignment="Right" Fill="{DynamicResource Theme_BorderBrush}"/>
+            </Grid>
+        </Grid>
+    </ScrollViewer>
+
+</Page>

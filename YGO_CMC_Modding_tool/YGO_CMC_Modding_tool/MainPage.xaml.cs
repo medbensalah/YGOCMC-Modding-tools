@@ -25,11 +25,13 @@ namespace YGO_CMC_Modding_tool
         private readonly OpponentRepository _opponentRepo = new OpponentRepository();
         private readonly StarterKitsRepository _starterkitRepo = new StarterKitsRepository();
         private readonly ShopsRepoitory _shopsRepo = new ShopsRepoitory();
+        private readonly AttributeBuffsRepository _attributeBuffsRepo = new AttributeBuffsRepository();
 
         private readonly MonstersViewModel _monstersVm = new MonstersViewModel();
         private readonly OpponentsViewModel _opponentsVm = new OpponentsViewModel();
         private readonly StarterKitsViewModel _starterKitsVm = new StarterKitsViewModel();
         private readonly ShopsViewModel _shopsVm = new ShopsViewModel();
+        private readonly AttributeBuffsViewModel _attributesBuffVm = new AttributeBuffsViewModel();
 
         public String SourceIsoPath
         {
@@ -90,6 +92,7 @@ namespace YGO_CMC_Modding_tool
                     _opponentsVm.Load(result.FullPath, _opponentRepo);
                     _starterKitsVm.Load(result.FullPath, _starterkitRepo);
                     _shopsVm.Load(result.FullPath, _shopsRepo);
+                    _attributesBuffVm.Load(result.FullPath, _attributeBuffsRepo);
 
                     MonstersDataPage.RefreshCurrentMonsterDisplay();
                     MonstersDataPage.SelectFirstMonster();
@@ -100,7 +103,9 @@ namespace YGO_CMC_Modding_tool
                     OpponentsDataPage.SelectFirstOpponent();
 
                     StarterKitsPage.RefreshCurrentStarterKitDisplay();
-                    ShopsPage.RefreshShopsDisplay(); // Add this line
+                    ShopsPage.RefreshShopsDisplay();
+
+                    AttributeBuffsPage.RefreshBuffsDisplay();
 
                 }
             }
