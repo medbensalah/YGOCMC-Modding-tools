@@ -177,9 +177,16 @@ namespace YGO_CMC_Modding_tool.Services
                     for (int i = 0; i < entry.Value.MonsterCount; i++)
                     {
                         var red = opponent.Reds != null && opponent.Reds.Count > i ? opponent.Reds[i] : null;
-                        writer.Write((byte)(red?.LevelRed ?? 0));
+                        writer.Write((byte)(red?.LevelRed ?? 1));
                         writer.BaseStream.Seek(4, SeekOrigin.Current);
                     }
+                    //yami bakura special case write the last lv again
+                    if (entry.Key == "Yami Bakura")
+                    {
+                        var lastRed = opponent.Reds?.LastOrDefault();
+                        writer.Write((byte)(lastRed?.LevelRed ?? 1));
+                    }
+
 
                     // Write MonstersBlue
                     writer.BaseStream.Seek(entry.Value.MonstersBlue, SeekOrigin.Begin);
@@ -194,8 +201,13 @@ namespace YGO_CMC_Modding_tool.Services
                     for (int i = 0; i < entry.Value.MonsterCount; i++)
                     {
                         var blue = opponent.Blues != null && opponent.Blues.Count > i ? opponent.Blues[i] : null;
-                        writer.Write((byte)(blue?.LevelBlue ?? 0));
+                        writer.Write((byte)(blue?.LevelBlue ?? 1));
                         writer.BaseStream.Seek(4, SeekOrigin.Current);
+                    }
+                    if (entry.Key == "Yami Bakura")
+                    {
+                        var lastBlue = opponent.Blues?.LastOrDefault();
+                        writer.Write((byte)(lastBlue?.LevelBlue ?? 1));
                     }
                 }
             }
