@@ -1,3 +1,5 @@
 .vs
 **/bin
 **/obj
+**/YGO_CMC_Modding_tool.Browser
+**/YGO_CMC_Modding_tool.Simulator
