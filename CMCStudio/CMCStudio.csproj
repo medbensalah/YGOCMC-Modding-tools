@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <AssemblyName>CMCStudio</AssemblyName>
+    <EnableDefaultCompileItems>true</EnableDefaultCompileItems>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="SkiaSharp" Version="3.119.4" />
+    <EmbeddedResource Include="Engine/RecoveredCatalog.json" LogicalName="RecoveredCatalog.json" />
+    <EmbeddedResource Include="Engine/MapSceneSetups.json" LogicalName="MapSceneSetups.json" />
+    <EmbeddedResource Include="Engine/MapWaterEvent.bin" LogicalName="MapWaterEvent.bin" />
+    <EmbeddedResource Include="Engine/MapTurnEvents.json" LogicalName="MapTurnEvents.json" />
+    <EmbeddedResource Include="Engine/BattleDialogueTable.bin" LogicalName="BattleDialogueTable.bin" />
+    <EmbeddedResource Include="Engine/CampaignProgression.json" LogicalName="CampaignProgression.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="tools/realesrgan/realesrgan-ncnn-vulkan.exe;tools/realesrgan/vcomp140.dll;tools/realesrgan/models/realesrgan-x4plus.bin;tools/realesrgan/models/realesrgan-x4plus.param;tools/realesrgan/*LICENSE.txt;tools/UPSCALE-SOURCE.txt" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Patterns/**/*.png" />
+  </ItemGroup>
+</Project>

@@ -1,5 +1,11 @@
-.vs
-**/bin
-**/obj
-**/YGO_CMC_Modding_tool.Browser
-**/YGO_CMC_Modding_tool.Simulator
+**/bin/
+**/obj/
+**/dist*/
+**/.vs/
+*.user
+*.suo
+*.iso
+*.p2s
+*.cmcproject
+*.assets/
+__pycache__/
