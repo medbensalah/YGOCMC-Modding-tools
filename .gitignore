@@ -9,3 +9,5 @@
 *.cmcproject
 *.assets/
 __pycache__/
+
+/release/
